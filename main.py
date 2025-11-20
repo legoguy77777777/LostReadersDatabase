@@ -8,8 +8,8 @@ import os
 
 
 
-def Menu():
-	
+def menu():
+
 
 
 def main():
