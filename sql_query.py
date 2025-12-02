@@ -2,9 +2,21 @@ import mysql.connector
 import random
 from enum import Enum
 
+#code notes :
+# entering "0" results in moving back one step
+# only 2 types of login accounts
 
 def login():
-
+  id_exists = 0
+  id_type = input("Please enter '1' for Patron Login or '2' for Librarian Login: ")
+  while id_exists == 0:
+    id = input("Please enter your ID (enter '0' to quit): ")
+    if id == '0':
+      quit()
+    if id_type == '1':
+      mycursor.execute("SELECT * FROM Patron WHERE Patron_id = (%s)", (id,))
+    if id_type == '2':
+      mycursor.execute("SELECT * FROM Librarian WHERE librarian_id = (%s)", (id,))
 
 #search media by ..... type?
 def search_media():
