@@ -6,10 +6,10 @@ create table Librarian(
 );
 
 create table Patron(
-	Member_ID int primary key,
+	Member_id int primary key,
     Patron_passowrd varchar(20) not null,
     Patron_name varchar(25) not null,
-    wishlist varchar(1000)
+    Wishlist varchar(1000)
 );
 
 create table Media(
@@ -19,7 +19,7 @@ create table Media(
     Availability int not null,
     Copies int not null,
     Due_date varchar(10),
-    Member_ID int references Patron
+    Member_id int references Patron
 		on delete cascade
 );
 
