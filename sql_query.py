@@ -6,6 +6,16 @@ from enum import Enum
 # entering "0" results in moving back one step
 # only 2 types of login accounts
 
+# connection to MySQL server
+connection = mysql.connector.connect(
+	host = "localhost",
+	user = "root",
+	password = "LostReadersDatabase",
+	database = "Library_Database_Phase3"
+)
+
+mycursor = connection.cursor()
+
 def login():
   id_exists = 0
   id_type = input("Please enter '1' for Patron Login or '2' for Librarian Login: ")
