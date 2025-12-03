@@ -104,6 +104,105 @@ def get_sum_available():
 
 #overall functions to show tables
 def show_database():
+	print("Showing Database Tables: ")
+		
+#printing Librarian table
+	print("Librarian:")
+	table = mycursor.execute("""
+		select *
+		from Librarian;
+	""")
+	table_info = mycursor.fetchall()
+	for row in table_info:
+		print(row)
+		
+#printing Patron table
+	print("\nPatron:")
+	table = mycursor.execute("""
+		select *
+		from Patron;
+		""")
+	table_info = mycursor.fetchall()
+	for row in table_info:
+		print(row)
+		
+#printing Media table
+	print("\nMedia:") 
+	table = mycursor.execute("""
+		select *
+		from Media;
+		""")
+	table_info = mycursor.fetchall()
+	for row in table_info:
+		print(row)
+#printing Media_book table
+	print("\nMedia_book:")
+	table = mycursor.execute("""
+		select *
+		from Media_book;
+		""")
+	table_info = mycursor.fetchall()
+	for row in table_info:
+		print(row)
+		
+#printing Media_dvd table
+	print("\nMedia_dvd:")
+	table = mycursor.execute("""
+		select *
+		from Media_dvd;
+		""")
+	table_info = mycursor.fetchall()
+	for row in table_info:
+		print(row)
+		
+#printing Media_item table
+	print("\nMedia_item:")
+	table = mycursor.execute("""
+		select *
+		from Media_item;
+		""")
+	table_info = mycursor.fetchall()
+	for row in table_info:
+		print(row)
+#printing Location table
+	print("\nLocation:")
+	table = mycursor.execute("""
+		select *
+		from Location;
+		""")
+	table_info = mycursor.fetchall()
+	for row in table_info:
+		print(row)
+	
+#printing Edit table
+	print("\nEdit:")
+	table = mycursor.execute("""
+		select *
+		from Edit;
+		""")
+	table_info = mycursor.fetchall()
+	for row in table_info:
+		print(row)
+	
+#printing Overdue_flag table
+	print("\nOverdue_flag:")
+	table = mycursor.execute("""
+		select *
+		from Overdue_flag;
+		""")
+	table_info = mycursor.fetchall()
+	for row in table_info:
+		print(row)
+	
+#printing Waitlist table
+	print("\nWaitlist:")
+	table = mycursor.execute("""
+		select *
+		from Waitlist;
+		""")
+	table_info = mycursor.fetchall()
+	for row in table_info:
+		print(row)
 
 
 #shows all three media types and tables
