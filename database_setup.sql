@@ -70,7 +70,7 @@ create table Overdue_flag(
 );
 
 create table Waitlist(
-	Patron_id int references Patron,
+	Patron_id int references Patron (Member_id),
     Dewey_decimal_code real references Media,
     Due_date varchar(10),
     primary key (Patron_id, Dewey_decimal_code)
