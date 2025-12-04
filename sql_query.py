@@ -90,13 +90,43 @@ def delete_media():
 
 
 #aggregate functions below
-def get_sum_media_type():
+#media_type is 1, 2, or 3. 1 = book, 2 = dvd, and 3 = item
+def get_sum_media_type(media_type):
+# sum of books
+	if media_type == 1:
+		table = mycursor.execute("""
+			select sum(copies)
+			from Media, Media_book  
+			where Media.Dewey_decimal_code = Media_book.Dewey_decimal_code;
+			""")
+		result = mycursor.fetchone()[0]
 
+# sum of dvds
+	elif media_type == 2:
+		table = mycursor.execute("""
+			select sum(copies)
+			from Media, Media_dvd
+			where Media.Dewey_decimal_code = Media_dvd.Dewey_decimal_code;
+			""")
+		result = mycursor.fetchone()[0]
+	
+# sum of items
+	elif media_type == 3:
+		table = mycursor.execute("""
+			select sum(copies)
+			from Media, Media_item
+			where Media.Dewey_decimal_code = Media_item.Dewey_decimal_code;
+			""")
+		result = mycursor.fetchone()[0]
 
+	return result
 
 def get_sum_media():
-
-
+	sum_books = get_sum_media_type(1)
+	sum_dvds = get_sum_media_type(2)
+	sum_items = get_sum_media_type(3)
+	total = sum_books + sum_dvds + sum_items
+	print("The total number of media (books/dvds/items) in the library is:", total)
 
 def get_sum_available():
 
