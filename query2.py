@@ -18,15 +18,41 @@ mycursor = connection.cursor()
 
 def login():
 	id_exists = 0
+	#choose type: librarian or patron
 	id_type = input("Please enter '1' for Patron Login or '2' for Librarian Login: ")
 	while id_exists == 0:
 		id = input("Please enter your ID (enter '0' to quit): ")
 		if id == '0':
 			quit()
 		if id_type == '1':
-			mycursor.execute("SELECT * FROM Patron WHERE Patron_id = (%s)", (id,))
+			mycursor.execute("SELECT * FROM Patron WHERE Member_id = (%s)", (id,))
+			for x in mycursor:
+				id_exists += 1
+
 		if id_type == '2':
-			mycursor.execute("SELECT * FROM Librarian WHERE librarian_id = (%s)", (id,))
+			mycursor.execute("SELECT * FROM Librarian WHERE Admin_id = (%s)", (id,))
+			for x in mycursor:
+				id_exists += 1
+		if id_exists == 0:
+			print("ID does not exist. Please enter valid ID.")
+	#now check password
+	pswd_check = 0
+	while pswd_check == 0:
+		pswd = input("Please enter your password (enter 0 to quit): ")
+		if pswd == '0':
+			quit()
+		if id_type == '1':
+			mycursor.execute("SELECT * FROM Patron WHERE Member_id = (%s) AND Patron_password = (%s)", (id, pswd))
+			for x in mycursor:
+				pswd_check += 1
+		if id_type == '2':
+			mycursor.execute("SELECT * FROM Librarian WHERE Admin_id = (%s) AND Librarian_password = (%s)", (id, pswd))
+			for x in mycursor:
+				pswd_check += 1
+		if pswd_check == '0':
+			print("Password is inncorrect. Please try again. ")
+
+
 
 def show_database():
 	print("Showing Database Tables: ")
@@ -185,10 +211,15 @@ def show_media():
 	for row in table_info:
 		print(row)
 
-def show_media_attributes():
+def show_attributes(table_name):
+	mycursor.execute("SHOW COLUMNS FROM {}".format(table_name))
+	print("Attributes")
+	for x in mycursor:
+		print(x)
+
 #do we even need this? it is techically the search fuction
 
-        
+
 
 def show_wishlist():
 #needs done
@@ -208,13 +239,13 @@ def show_waitlist():
 def overdue_flag():
 #needs done
 
-def add_media():
+def add_media(DDC, Summary, Media_name, Availability, Copies, Due_date, Member_id):
 #needs done
 
-def add_patron():
+def add_patron(Member_id, Patron_password, Patron_name, Wishlist):
 #needs done
 
-def add_librarian():
+def add_librarian(Admin_id, Librarian_password, Librarian_name):
 #needs done
 
 def reserve_media():
@@ -245,12 +276,23 @@ def edit_wishlist():
 #needs done
 
 
-def delete_media():
+def delete_media(condition : str):
 #needs done
 
 
-def delete_patron():
-#needs done
+def delete_patron(condition : str):
+	try:
+		mycursor.execute("DELETE FROM Patron WHERE {}".format(condition))
+		db.commit()
+	except mysql.connector.errors.IntegrityError or mysql.connector.errors.ProgrammingError as err:
+		print(err)
+		end = input("Press Enter to continue..." )
+		return err
+	mycursor.execute("SELECT * FROM Librarian")
+	for x in mycursor:
+		print(x)
+	del_finished = input("Database updated. Press Enter to continue... ")
+
 
 
 def delete_librarian():
