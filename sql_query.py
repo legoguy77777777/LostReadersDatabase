@@ -245,6 +245,14 @@ def show_media():
 
 
 def show_patrons():
+	print("Patrons:")   
+	table = mycursor.execute("""
+		select Patron_name, Member_id, Wishlist
+		from Patron;
+		""")
+	table_info = mycursor.fetchall()
+	for row in table_info:
+		print(row)
 
 
 
