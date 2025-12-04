@@ -55,10 +55,12 @@ create table Location(
 
 CREATE TABLE Edit (
     Admin_id INT REFERENCES Librarian,
-    Shelf_number INT REFERENCES Location(Shelf_number),
+    Shelf_number int not null,
+    Media_dewey_decimal_code real not null,
     Dewey_decimal_code REAL REFERENCES Media,
     Last_edit_date VARCHAR(10),
-    PRIMARY KEY (Admin_id , Shelf_number , Dewey_decimal_code , Last_edit_date)
+    PRIMARY KEY (Admin_id , Shelf_number , Dewey_decimal_code , Last_edit_date),
+    constraint Foreign_key_location Foreign Key (Shelf_number, Media_dewey_decimal_code) references location
 );
 
 create table Overdue_flag(
@@ -171,11 +173,11 @@ values (3, 072.304, 1, "West");
 
 #Edit
 insert into Edit
-values (888888, 3, 072.304, "08/12/23");
+values (888888, 3, 072.304, 072.304, "08/12/23");
 insert into Edit
-values (123456, 20, 629.210, "01/03/25");
+values (123456, 20, 629.210, 629.210, "01/03/25");
 insert into Edit
-values (123456, 15, 191.513, "12/01/25");
+values (123456, 15, 191.513, 191.513, "12/01/25");
 
 #Overdue_flag
 insert into Overdue_flag
