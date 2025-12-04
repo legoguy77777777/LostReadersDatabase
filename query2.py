@@ -140,7 +140,14 @@ def show_patrons():
 		print(row)
 
 def show_librarians():
-#needs done
+	print("Librarians:")
+	table = mycursor.execute("""
+		select Librarian_name, Admin_id
+		from Librarian;
+		""")
+	table_info = mycursor.fetchall()
+	for row in table_info:
+		print(row)
 
 def show_media():
 	print("Showing Media by Type:")
