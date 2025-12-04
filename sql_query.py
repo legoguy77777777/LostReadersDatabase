@@ -208,6 +208,8 @@ def show_database():
 #shows all three media types and tables
 def show_media():
 	print("Showing Media by Type:")
+
+# printing table of books
 	print("Books:")
 	table = mycursor.execute("""
 		select Media_book.Dewey_decimal_code, Media.Media_name, Media_book.Author, Media_book.Genre, Media.Availability, Medi$
@@ -217,7 +219,8 @@ def show_media():
 	table_info = mycursor.fetchall()
 	for row in table_info:
 		print(row)
-	
+
+# printing table of dvds
 	print("Dvds:")
 	table = mycursor.execute("""
 		select Media_dvd.Dewey_decimal_code, Media.Media_name, Media_dvd.Director, Media_dvd.Genre, Media.Availability, Media$
@@ -228,6 +231,7 @@ def show_media():
 	for row in table_info:
 		print(row)
 	
+# printing table of items
 	print("Items:")
 	table = mycursor.execute("""
 		select Media_item.Dewey_decimal_code, Media.Media_name, Media.Availability, Media.Copies
