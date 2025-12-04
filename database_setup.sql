@@ -7,7 +7,7 @@ create table Librarian(
 
 create table Patron(
 	Member_id int primary key,
-    Patron_passowrd varchar(20) not null,
+    Patron_password varchar(20) not null,
     Patron_name varchar(25) not null,
     Wishlist varchar(1000)
 );
