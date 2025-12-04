@@ -129,6 +129,12 @@ def get_sum_media():
 	print("The total number of media (books/dvds/items) in the library is:", total)
 
 def get_sum_available():
+	table = mycursor.execute("""
+		select sum(Availability)
+		from Media;
+		""")
+	total = mycursor.fetchone()[0]
+	print("The total number of media (books/dvds/items) available for checkout in the library is:", total)
 
 
 
@@ -141,7 +147,7 @@ def show_database():
 	table = mycursor.execute("""
 		select *
 		from Librarian;
-	""")
+		""")
 	table_info = mycursor.fetchall()
 	for row in table_info:
 		print(row)
