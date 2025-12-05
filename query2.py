@@ -253,7 +253,61 @@ def reserve_media():
 
 
 def checkout_media():
-#needs done
+	dewey_decimal_code = input("Please enter the Dewey decimal code of the item you would like to check out: ")
+#checking if item exists
+	mycursor.execute("""
+		select Dewey_decimal_code
+		from Media
+		where Media.Dewey_decimal_code = %s""", (dewey_decimal_code,))
+	table = mycursor.fetchall()
+	if not table:
+		print("Item not found")
+		return
+#checking if item is available
+	mycursor.execute("""
+		select Availability
+		from Media
+		where Media.Dewey_decimal_code = %s""", (dewey_decimal_code,))
+	availability = mycursor.fetchone()[0]
+	if availability == 1:
+		member_id = input("Please enter your Member ID: ")
+#validating member id
+		mycursor.execute("""
+			select Member_id
+			from Patron
+			where Patron.Member_id = %s""", (member_id,))
+		id = mycursor.fetchall()
+		if not id:
+			print("Member ID not found.")
+			return
+		today = date.today()
+		due = today + timedelta(days = 21)
+		mycursor.execute("""
+			update Media
+			set Availability = 0, Due_date = %s, Member_id = %s
+			where Dewey_decimal_code = %s""", (due, member_id, dewey_decimal_code))
+		connection.commit()
+		mycursor.execute("""
+			select Dewey_decimal_code, Media_name, Due_date, Member_id
+			from Media
+			where Media.Dewey_decimal_code = %s""", (dewey_decimal_code,))
+		table_info = mycursor.fetchall()
+		for row in table_info:
+			print(row)
+		print("Is this the item you want to check out?")
+		option = input("(y - Yes, n - No)") 
+if (option == "y") or (option == "Y"):
+			print("You checked out: ")
+			for row in table_info:
+				print(row)
+			print("This item will be due:", due)
+		else:
+			return
+
+	else:	   
+		print("Sorry, this item is not available for checkout at this time. Would you like to reserve this item?")
+		reserve_media() #not finished
+
 
 
 def return_media():
