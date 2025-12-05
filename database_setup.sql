@@ -46,7 +46,7 @@ create table Media_item(
 );
 
 create table Location(
-	Shelf_number int not null unique,
+	Shelf_number int not null,
     Media_dewey_decimal_code real references Media (Dewey_decimal_code),
     Shelf_row int,
     Cardinal_direction varchar (8),
@@ -118,6 +118,9 @@ values (352.910, "A diamond heist reunites retired Horsemen illusionists with ne
 insert into Media
 values (629.210, "While trying to lead a quiet suburban life, a family of undercover superheroes are forced into action to save the world.",
 "The Incredibles", 0, 4, null, null);
+insert into Media
+values (629.211, "While trying to lead a quiet suburban life, a family of undercover superheroes are forced into action to save the world.",
+"The Incredibles", 0, 4, null, null); #for testing purposes
 
 #items
 insert into Media
@@ -142,6 +145,8 @@ insert into Media_dvd
 values ("Ruben Fleischer", "Thriller", 352.910);
 insert into Media_dvd
 values ("Brad Bird", "Superhero", 629.210);
+insert into Media_dvd
+values ("Brad Bird", "Superhero", 629.211); #for testing purposes
 
 #Media_item
 insert into Media_item
@@ -165,6 +170,8 @@ values (18, 352.910, 3, "East");
 insert into location
 values (20, 629.210, 2, "South");
 insert into location
+values (20, 629.211, 2, "South"); # for testing purposes
+insert into location
 values (1, 031.705, 1, "West");
 insert into location
 values (2, 792.469, 1, "West");
@@ -173,11 +180,11 @@ values (3, 072.304, 1, "West");
 
 #Edit
 insert into Edit
-values (888888, 3, 072.304, 072.304, "08/12/23");
+values (888888, 3, 072.304, 072.304, "2023-08-12");
 insert into Edit
-values (123456, 20, 629.210, 629.210, "01/03/25");
+values (123456, 20, 629.210, 629.210, "2025-01-03");
 insert into Edit
-values (123456, 15, 191.513, 191.513, "12/01/25");
+values (123456, 15, 191.513, 191.513, "2025-12-01");
 
 #Overdue_flag
 insert into Overdue_flag
@@ -189,11 +196,8 @@ values (888888, 031.705);
 
 #Waitlist
 insert into Waitlist
-values (8675309, 352.910, "01/03/26");
+values (8675309, 352.910, "2026-01-03");
 insert into Waitlist
-values (8675309, 629.210, "02/07/26");
+values (8675309, 629.210, "2026-02-07");
 insert into Waitlist
-values (149281, 123.456, "03/17/26");
-
-
-
+values (149281, 123.456, "2026-03-17");
