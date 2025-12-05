@@ -345,17 +345,27 @@ def get_sum_available():
 	total = mycursor.fetchone()[0]
 	print("The total number of media (books/dvds/items) available for checkout in the library is:", total)
 
+
+def locate_media(media_info, dewey_decimal_index):
+	dewey_decimal_code = media_info[dewey_decimal_index]
+	media_location_table = mycursor.execute("""
+		select Media.Dewey_decimal_code, Location.Shelf_number, Location.Shelf_row, Location.Cardinal_direction
+		from Media, Location
+		where Media.Dewey_decimal_code = Location.Media_dewey_decimal_code and Media.Dewey_decimal_code = %s""", (dewey_decimal_code,))
+	location_info = mycursor.fetchall()
+	print("Location is: ", location_info)
+
 def search_media():
 	correct = "0" #to be used in input validation later
-	print("What would you like to search by? \nSearch Menu: \n1 - Dewey Decimal Code \n2 - Title/Name \n3 - Genre (Book and Dvd o$
+	print("What would you like to search by? \nSearch Menu: \n1 - Dewey Decimal Code \n2 - Title/Name \n3 - Genre (Book and Dvd only) \n4 - Author/Director (Book and Dvd only) \n5 - Quit (or press any key)")
 	option = input("Please enter the number of the search method you would like to use: ")
 #searching by dewey decimal code
-	if option == "1":  
+	if option == "1":
 		Dewey_decimal_code = input("Please enter the Dewey decimal code of the media you are searching for: ")
 		print("Searching by Dewey decimal code:")
-		table = mycursor.execute(""" 
+		table = mycursor.execute("""
 			select Dewey_decimal_code, Media_name, Availability, Copies, Summary
-			from Media   
+			from Media
 			where Media.Dewey_decimal_code = %s""", (Dewey_decimal_code,))
 		table_info = mycursor.fetchall()
 		if not table_info:
@@ -363,6 +373,14 @@ def search_media():
 		else:
 			for row in table_info:
 				print(row)
+
+		while (correct != "y") and (correct != "n") and (correct != "Y") and (correct != "N"):
+			correct = input("Is this the media you were looking for? (y - Yes, n - No) ")
+		if (correct == "y") or (correct == "Y"):
+			locate_media(table_info[0], 0)
+		else:
+			print("Returning to search menu...\n")
+			search_media()
 #searching by title
 	elif option == "2":
 		media_name = input("Please enter the title/name of the media you are searching for: ")
@@ -375,74 +393,146 @@ def search_media():
 		if not table_info:
 			print("Item not found. Please ensure the title/name was entered correctly.")
 		else:
+			num = 1
 			for row in table_info:
-				print(row)
+				print(num, row)
+				num += 1
+		selection = 1
+		if len(table_info) > 1:
+			while True:
+				try:
+					selection = int(input("Please enter the number of the media you want to know the location of: "))
+					break
+				except ValueError:
+					print("Invalid input")
+			print(table_info[selection - 1])
+					
+		while (correct != "y") and (correct != "n") and (correct != "Y") and (correct != "N"):
+			correct = input("Is this the media you were looking for? (y - Yes, n - No) ")
+		if (correct == "y") or (correct == "Y"):
+			locate_media(table_info[selection - 1], 0)
+		else:
+			print("Returning to search menu...\n")
+			search_media()
+				
+			
 #searching by genre
 	elif option == "3":
 		media_type = input("Please enter the type of media you are searching for (1 = Book, 2 = Dvd): ")
-		genre =  input("Please enter the genre you are looking for: ")
 		print("Searching by genre: ")
 #searching books
 		if media_type == "1":
+			genre =  input("Please enter the genre you are looking for: ")
 			table = mycursor.execute("""
-				select Media_book.Genre, Media.Dewey_decimal_code, Media.Media_name, Media.Availability, Media.Copies$
+				select Media_book.Genre, Media.Dewey_decimal_code, Media.Media_name, Media.Availability, Media.Copies, Media.Summary
 				from Media_book, Media
 				where Media_book.Dewey_decimal_code = Media.Dewey_decimal_code and Media_book.Genre = %s""", (genre,))
 			table_info = mycursor.fetchall()
 			if not table_info:
 				print("Item not found. Please ensure the genre was entered correctly.")
 			else:
-				for row in table_info:  
-					print(row)
-				
+				num = 1
+				for row in table_info:
+					print(num, row)
+					num += 1
+			
 #searching dvds
 		elif media_type == "2":
+			genre = input("Please enter the genre you are looking for: ")
 			table =  mycursor.execute("""
-				select Media_dvd.Genre, Media.Dewey_decimal_code, Media.Media_name, Media.Availability, Media.Copies,$
+				select Media_dvd.Genre, Media.Dewey_decimal_code, Media.Media_name, Media.Availability, Media.Copies, Media.Summary
 				from Media_dvd, Media
-				where Media.Dewey_decimal_code = Media_dvd.Dewey_decimal_code and Media_dvd.Genre = %s""", (genre,))  
+				where Media.Dewey_decimal_code = Media_dvd.Dewey_decimal_code and Media_dvd.Genre = %s""", (genre,))
 			table_info = mycursor.fetchall()
 			if not table_info:
 				print("Item not found. Please ensure the genre was entered correctly.")
 			else:
+				num = 1
 				for row in table_info:
-					print(row)
-				
+					print(num, row)
+					num += 1
+			
 		else:
 			print("Invalid input")
+				
+		selection = 1
+		if len(table_info) > 1:   
+			while True:
+				try:
+					selection = int(input("Please enter the number of the media you want to know the location of: "))
+					break
+				except ValueError:
+					print("Invalid input")
+			print(table_info[selection - 1])
+		while (correct != "y") and (correct != "n") and (correct != "Y") and (correct != "N"):
+			correct = input("Is this the media you were looking for? (y - Yes, n - No) ")
+		if (correct == "y") or (correct == "Y"):
+			locate_media(table_info[selection - 1], 1)
+		else:
+			print("Returning to search menu...\n")
+			search_media()
 			
-#searching by author/director   
-	elif option == "4":
+#searching by author/director
+	elif option == "4":  
 		media_type = input("Please enter the type of media you are searching for (1 = Book, 2 = Dvd): ")
-		author = input("Please enter the author/director you are looking for: ")
-#searching boooks	       
+#searching books
 		if media_type == "1":
+			author = input("Please enter the author you are looking for: ")
 			table = mycursor.execute("""
-				select Media_book.Author, Media.Dewey_decimal_code, Media.Media_name, Media.Availability, Media.Copie$
+				select Media_book.Author, Media.Dewey_decimal_code, Media.Media_name, Media.Availability, Media.Copies, Media.Summary
 				from Media_book, Media
-				where Media_book.Dewey_decimal_code = Media.Dewey_decimal_code and Media_book.Author = %s""", (author$
+				where Media_book.Dewey_decimal_code = Media.Dewey_decimal_code and Media_book.Author = %s""", (author,))
 			table_info = mycursor.fetchall()
 			if not table_info:
 				print("Item not found. Please ensure the author name was entered correctly.")
-			else:   
+			else:
+				num = 1
 				for row in table_info:
-					print(row)
+					print(num, row)
+					num += 1
+#searching dvds
 		elif media_type == "2":
+			author = input("Please enter the director you are looking for: ")
 			table = mycursor.execute("""
-				select Media_dvd.Director, Media.Dewey_decimal_code, Media.Media_name, Media.Availability, Media.Copi$
+				select Media_dvd.Director, Media.Dewey_decimal_code, Media.Media_name, Media.Availability, Media.Copies, Media.Summary
 				from Media_dvd, Media
-				where Media_dvd.Dewey_decimal_code = Media.Dewey_decimal_code and Media_dvd.Director = %s""", (author$
+				where Media_dvd.Dewey_decimal_code = Media.Dewey_decimal_code and Media_dvd.Director = %s""", (author,))
 			table_info = mycursor.fetchall()
 			if not table_info:
 				print("Item not found. Please ensure the director name was entered correctly.")
 			else:
+				num = 1
 				for row in table_info:
-					print(row)
-		else:  
+					print(num, row)
+					num += 1
+		else:	   
 			print("Invalid input")
 
-#validating media before returning location
-	while (correct != "y") and (correct != "n") and (correct != "Y") and (correct != "N"):
-		correct = input("Is this the media you were looking for? (y - Yes, n - No) ")
-				
+		selection = 1   
+		if len(table_info) > 1:
+			while True:
+				try:
+					selection = int(input("Please enter the number of the media you want to know the location of: "))
+					break
+				except ValueError:
+					print("Invalid input")
+			print(table_info[selection - 1])
+			
+		while (correct != "y") and (correct != "n") and (correct != "Y") and (correct != "N"):
+			correct = input("Is this the media you were looking for? (y - Yes, n - No) ")
+		if (correct == "y") or (correct == "Y"):
+			locate_media(table_info[selection - 1], 1)
+		else:   
+			print("Returning to search menu...\n")
+			search_media()
+			
+	elif option == "5":     
+		return
+					
+		     
+
+
+
+
+
 
