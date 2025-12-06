@@ -243,10 +243,38 @@ def add_media(DDC, Summary, Media_name, Availability, Copies, Due_date, Member_i
 #needs done
 
 def add_patron(Member_id, Patron_password, Patron_name, Wishlist):
-#needs done
+	try:
+		mycursor.execute("INSERT Patron(Member_id, Patron_password, Patron_name, wishlist)VALUES(%s,%s,%s,%s)", (Member_id, Patron_password, Patron_name, Wishlist))
+		db.commit()
+	except mysql.connector.IntegrityError as err:
+		print("Error: {}".format(err))
+		return err
+	print("New Patron added!")
+	print("New Patron Table: ")
+	mycursor.execute("SELECT * FROM Patron")
+	for x in mycursor:
+		print(x)
+	ack = input("Database Updated [press Enter to cont. ]")
+	if ack == 1:
+		db.commit()
+
 
 def add_librarian(Admin_id, Librarian_password, Librarian_name):
-#needs done
+	try:
+		mycursor.execute("INSERT Librarian(Admin_id, Librarian_password, Librarian_name)VALUES(%s,%s,%s)", (Admin_id, Librarian_password, Librarian_name))
+		db.commit()
+	except mysql.connector.IntegrityError as err:
+		print("Error: {}".format(err))
+		return err
+	
+	print("New Librarian added!")
+	print("New Librarian Table: ")
+	mycursor.execute("SELECT * FROM Librarian")
+	for x in mycursor:
+		print(x)
+	ack = input("Database Updated [press ENTER to cont. ]")
+	if ack == 1:
+		db.commit()
 
 
 #not sure where is best to put this but for use in reserve and checkout functions
@@ -390,7 +418,62 @@ def return_media():
 
 
 def edit_password():
-#needs done
+	id_exists = 0
+	id_type = 0
+	id_type = input("Please enter '1' for Patron or '2' for Librarian (enter 0 to quit)")
+	if id_type == 0;
+		quit()
+	while id_exists == 0:
+		id = input("Please enter your ID (enter 0 to quit)")
+		if id == '0':
+			quit()
+		if id_type == '1':
+			try:
+				mycursor.execute(f"SELECT * FROM Patron WHERE Member_id = {id}")
+				for x in mycursor:
+					id_exists += 1
+			except:
+				print("incorrect ID... Please try again")
+		if id_type == '2':
+			try:
+				mycursor.execute(f"SELECT * FROM Librarian WHERE Admin_id = {id}")
+				for x in mycursor:
+					id_exists += 1
+			except:
+				print("incorrect ID... Please try again")
+		if id_exists == 0:
+			print("Not a valid ID.")
+			ack = input("Press Enter cont. ")
+
+	pass_correct = 0
+	while pass_connect == 0:
+		pswd = input("Please enter current password (enter 0 to quit): ")
+		if pswd == '0':
+			quit()
+		if id_type == '1':
+			mycursor.execute(f"SELECT * FROM Patron WHERE Member_id = {id} AND Patron_password = {pswd}")
+			for x in mycursor:
+				pass_correct += 1
+		if id_type == '2':
+			mycursor.execute(f"SELECT * FROM Librarian WHERE Admin_id = {id} AND Librarian_password = {pswd}")
+		pass_correct == 0:
+			print("Invalid Password provided. Please try again. ")
+			ack =input("Press Enter to cont.")
+	while pass_correct == 1:
+		new_pswd = input("Please enter new password (enter 0 to quit):")
+		if new_pswd ==  '0';
+			quit()
+		if id_type == '1':
+			mycursor.execute(f"UPDATE Patron SET Patron_password = '{new_pswd}' WHERE Member_id = {id} AND Patron_password = {pswd}")
+			for x in mycursor:
+				print(x)
+		if id_type == '2':
+			mycursor.execute(f"UPDATE Librarian SET Librarian_password = '{new_pswd}' WHERE Admin_id = {id} AND Librarian_password = {pswd}")
+			for x in mycursor:
+				print(x)
+
+		ack = input("Update successful. Press Enter to cont. ")
+		pass_correct += 1
 
 
 def edit_location():
