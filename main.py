@@ -5,6 +5,7 @@
 import sql_query.py as sq
 import time
 import os
+import datetime
 
 def Add_Tuples():
     clear()
@@ -83,6 +84,23 @@ def Add_Tuples():
 			copies = input("Plase enter number of copies of media that will be stocked: ")
             sq.Add_Media(dewey_dec,summary,Media_name,1,copies,null,null)
 			sq.Add_Media_item(dewey_dec)
+		case 7:
+			id = input("Please enter your librarian ID: ")
+            #if ID in librarian IDs
+			dewey_dec = input("Plase enter the media's dewey decimal code: ")
+			Shelf_number  = input("Plase enter the shelf number the media is located: ")
+			Shelf_row = input("Plase enter the shelf row the media is located: ")
+			Cardinal_direction  = input("Plase enter the Cardinal direction the exposed part of the media is facing: ")
+			sq.Add_Location(Shelf_number, Media_dewey_decimal_code,Shelf_row,Cardinal_direction)
+		case 8:
+			id = input("Please enter your librarian ID: ")
+            #if ID in librarian IDs
+				#add all info for edits
+		case 9:
+			id = input("Please enter your patron ID: ")
+            #if ID in patron IDs
+			dewey_dec = input("Plase enter the media's dewey decimal code: ")
+			sq.Add_Waitlist(id, dewey_dec, 2026-01-01)
 
 
 
