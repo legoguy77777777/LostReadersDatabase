@@ -413,8 +413,59 @@ def checkout_media():
 			return
 
 
-def return_media():
-#needs done
+def return_media():  
+	dewey_decimal_code = input("Please enter the Dewey decimal code of the item you wish to return: ")
+		
+#checking that item exists
+	exists = validate_existance(dewey_decimal_code)
+	if not exists:
+		print("Item not found.")
+		return
+		
+#checking that item can be returned 
+	availability = check_available(dewey_decimal_code)
+	if availability:  
+		print("This item is not currently checked out to anyone")
+		return
+	
+	member_id = input("Please enter your Member ID: ")
+#validating member id   
+	valid_id = validate_member(member_id)
+	if not valid_id:
+		print("Member ID not found")
+		return
+		
+#validating that this item is checked out to this member
+	mycursor.execute("""   
+		select Dewey_decimal_code
+		from Media
+		where Media.Dewey_decimal_code = %s and Media.Member_id = %s""", (dewey_decimal_code, member_id,))
+	valid = mycursor.fetchall()
+	if not valid:
+		print("This item is not currently checked out to this Member ID")
+		return 
+		
+#validating item entered
+	mycursor.execute("""
+		select *
+		from Media
+		where Media.Dewey_decimal_code = %s""", (dewey_decimal_code,))
+	table = mycursor.fetchall()
+	for row in table:
+		print(row)
+	print("Is this the item you wish to return?")
+	option = input("(y - Yes, n - No) ")
+	if (option != "y") and (option != "Y"):
+		return
+
+#updating table 
+	mycursor.execute("""
+		update Media
+		set Availability = 1, Due_date = null, Member_id = null
+		where Media.Dewey_decimal_code = %s""", (dewey_decimal_code,))
+	connection.commit()
+	print("Item returned!")
+
 
 
 def edit_password():
