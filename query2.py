@@ -277,6 +277,11 @@ def add_librarian(Admin_id, Librarian_password, Librarian_name):
 		db.commit()
 
 
+def add_waitlist(id, DDC, date):
+#needs done
+
+
+
 #not sure where is best to put this but for use in reserve and checkout functions
 def validate_existance(DDC):
 	mycursor.execute("""
@@ -321,6 +326,7 @@ def get_due_date(DDC):
 		where Media.Dewey_decimal_code = %s""", (DDC,))
 	table = mycursor.fetchone()[0]
 	return table  
+
 def reserve_media():
 	dewey_decimal_code = input("Please enter the Dewey decimal code of the item you would like to reserve: ")
 			
@@ -477,19 +483,95 @@ def edit_password():
 
 
 def edit_location():
-#needs done
+	media_exists = 0
+	while media_exists == 0:
+		DDC = input("Please enter the Dewey Decimal Code associated with the item you wishh to change the Location of: ")
+		mycursor.execute("SELECT * FROM Location WHERE Media_dewey_decimal_code = (%s)", (DDC,))
+		for x in mycursor:
+			media_exists += 1
+		if media_exists >= 1:
+			new_shelf_number = input("Please input a new shelf number for the Item: ")
+			mycursor.execute("UPDATE Location SET Shelf_number = (%s) WHERE Media_dewey_decimal_code", (new_shelf_number, DDC))
+			db.commit()
+	print("Location Updated. Now printing table...")
+	show_Location()
+	ack = input("press Enter to cont. ")
 
 
-def edit_waitlist():
-#needs done
+def delete_waitlist(condition : str):
+        try:
+                mycursor.execute("DELETE FROM Waitlist WHERE {}".format(condition))
+                db.commit()
+        except mysql.connector.errors.IntegrityError or mysql.connector.errors.ProgrammingError as>
+                print("Error: Condition does not exist. {}".format(err))
+                end = input("Press Enter to continue..." )
+                return err
+        mycursor.execute("SELECT * FROM Waitlist")
+        for x in mycursor:
+                print(x)
+        del_finished = input("Database updated. Press Enter to continue... ")
 
 
-def edit_wishlist():
-#needs done
+
+
+def delete_media_book(condition : str):
+        try:
+                mycursor.execute("DELETE FROM Media_Book WHERE {}".format(condition))
+                db.commit()
+        except mysql.connector.errors.IntegrityError or mysql.connector.errors.ProgrammingError as>
+                print("Error: Condition does not exist. {}".format(err))
+                end = input("Press Enter to continue..." )
+                return err
+        mycursor.execute("SELECT * FROM Media_Book")
+        for x in mycursor:
+                print(x)
+        del_finished = input("Database updated. Press Enter to continue... ")
+
+
+
+def delete_media_dvd(condition : str):
+        try:
+                mycursor.execute("DELETE FROM Media_dvd WHERE {}".format(condition))
+                db.commit()
+        except mysql.connector.errors.IntegrityError or mysql.connector.errors.ProgrammingError as>
+                print("Error: Condition does not exist. {}".format(err))
+                end = input("Press Enter to continue..." )
+                return err
+        mycursor.execute("SELECT * FROM Media_dvd")
+        for x in mycursor:
+                print(x)
+        del_finished = input("Database updated. Press Enter to continue... ")
+
+
+def delete_media_item(condition : str):
+        try:
+                mycursor.execute("DELETE FROM Media_item WHERE {}".format(condition))
+                db.commit()
+        except mysql.connector.errors.IntegrityError or mysql.connector.errors.ProgrammingError as>
+                print("Error: Condition does not exist. {}".format(err))
+                end = input("Press Enter to continue..." )
+                return err
+        mycursor.execute("SELECT * FROM Media_item")
+        for x in mycursor:
+                print(x)
+        del_finished = input("Database updated. Press Enter to continue... ")
+
+
 
 
 def delete_media(condition : str):
-#needs done
+        try:
+                mycursor.execute("DELETE FROM Media WHERE {}".format(condition))
+                db.commit()
+        except mysql.connector.errors.IntegrityError or mysql.connector.errors.ProgrammingError as>
+                print("Error: Condition does not exist. {}".format(err))
+                end = input("Press Enter to continue..." )
+                return err
+        mycursor.execute("SELECT * FROM Media")
+        for x in mycursor:
+                print(x)
+        del_finished = input("Database updated. Press Enter to continue... ")
+
 
 
 def delete_patron(condition : str):
@@ -497,20 +579,31 @@ def delete_patron(condition : str):
 		mycursor.execute("DELETE FROM Patron WHERE {}".format(condition))
 		db.commit()
 	except mysql.connector.errors.IntegrityError or mysql.connector.errors.ProgrammingError as err:
-		print(err)
+		print("Error: Condition does not exist. {}".format(err))
 		end = input("Press Enter to continue..." )
 		return err
-	mycursor.execute("SELECT * FROM Librarian")
+	mycursor.execute("SELECT * FROM Patron")
 	for x in mycursor:
 		print(x)
 	del_finished = input("Database updated. Press Enter to continue... ")
 
 
 
-def delete_librarian():
-#needs done
-
+def delete_librarian(condition : str):
+	try:
+		mycursor.execute("DELETE FROM Librarian WHERE {}".format(condition))
+		db.commit()
+	except mysql.connector.error.IntegrityError or mysql.connector.errors.ProgrammingError as err:
+		print("Error: Condition does not exist. {}".format(err))
+		end = input("Press Enter to continue...")
+		return err
+	mycursor.execute("SELECT * FROM Librarian")
+	for x in mycursor:
+		print(x)
+	del_finished = input("Database updated. Press Enter to continue...")
         
+
+
 #aggregate functions below
 #media_type is 1, 2, or 3. 1 = book, 2 = dvd, and 3 = item
 def get_sum_media_type(media_type):
