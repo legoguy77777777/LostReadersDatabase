@@ -86,6 +86,7 @@ def show_database():
 	table_info = mycursor.fetchall()
 	for row in table_info:
 		print(row)
+
 #printing Media_book table
 	print("\nMedia_book:")
 	table = mycursor.execute("""
@@ -115,6 +116,7 @@ def show_database():
 	table_info = mycursor.fetchall()
 	for row in table_info:
 		print(row)
+
 #printing Location table
 	print("\nLocation:")
 	table = mycursor.execute("""
@@ -155,6 +157,7 @@ def show_database():
 	for row in table_info:
 		print(row)
 
+
 def show_patrons():
 	print("Patrons:")
 	table = mycursor.execute("""
@@ -165,6 +168,7 @@ def show_patrons():
 	for row in table_info:
 		print(row)
 
+
 def show_librarians():
 	print("Librarians:")
 	table = mycursor.execute("""
@@ -174,6 +178,7 @@ def show_librarians():
 	table_info = mycursor.fetchall()
 	for row in table_info:
 		print(row)
+
 
 def show_media():
 	print("Showing Media by Type:")
@@ -210,6 +215,7 @@ def show_media():
 	table_info = mycursor.fetchall()
 	for row in table_info:
 		print(row)
+
 
 def show_attributes(table_name):
 	mycursor.execute("SHOW COLUMNS FROM {}".format(table_name))
@@ -293,6 +299,7 @@ def validate_existance(DDC):
 		return False
 	else:
 		return True
+
 			     
 #same as before not sure where to put this
 def check_available(DDC):
@@ -305,6 +312,7 @@ def check_available(DDC):
 		return False
 	else:
 		return True
+
 		
 #same as before
 def validate_member(id):
@@ -317,6 +325,7 @@ def validate_member(id):
 		return False
 	else:   
 		return True
+
 			
 #same as before
 def get_due_date(DDC):
@@ -327,6 +336,10 @@ def get_due_date(DDC):
 	table = mycursor.fetchone()[0]
 	return table  
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 093def56152e8ac12b0e37642deeef7f6c889eaf
 def reserve_media():
 	dewey_decimal_code = input("Please enter the Dewey decimal code of the item you would like to reserve: ")
 			
@@ -363,8 +376,10 @@ def reserve_media():
 		print("Item is reserved!")
 		print("This item should be available", due_date)
 		
+
 def checkout_media():
 	dewey_decimal_code = input("Please enter the Dewey decimal code of the item you would like to check out: ")
+
 #checking if item exists
 	exists = validate_existance(dewey_decimal_code)
 	if not exists:
@@ -398,7 +413,7 @@ def checkout_media():
 		for row in table_info:
 			print(row)
 		print("Is this the item you want to check out?")
-		option = input("(y - Yes, n - No)")
+		option = input("(y - Yes, n - No) ")
 		if (option == "y") or (option == "Y"):
 			
 		
@@ -419,8 +434,60 @@ def checkout_media():
 			return
 
 
-def return_media():
-#needs done
+def return_media():  
+	dewey_decimal_code = input("Please enter the Dewey decimal code of the item you wish to return: ")
+		
+#checking that item exists
+	exists = validate_existance(dewey_decimal_code)
+	if not exists:
+		print("Item not found.")
+		return
+		
+#checking that item can be returned 
+	availability = check_available(dewey_decimal_code)
+	if availability:  
+		print("This item is not currently checked out to anyone")
+		return
+	
+	member_id = input("Please enter your Member ID: ")
+
+#validating member id   
+	valid_id = validate_member(member_id)
+	if not valid_id:
+		print("Member ID not found")
+		return
+		
+#validating that this item is checked out to this member
+	mycursor.execute("""   
+		select Dewey_decimal_code
+		from Media
+		where Media.Dewey_decimal_code = %s and Media.Member_id = %s""", (dewey_decimal_code, member_id,))
+	valid = mycursor.fetchall()
+	if not valid:
+		print("This item is not currently checked out to this Member ID")
+		return 
+		
+#validating item entered
+	mycursor.execute("""
+		select *
+		from Media
+		where Media.Dewey_decimal_code = %s""", (dewey_decimal_code,))
+	table = mycursor.fetchall()
+	for row in table:
+		print(row)
+	print("Is this the item you wish to return?")
+	option = input("(y - Yes, n - No) ")
+	if (option != "y") and (option != "Y"):
+		return
+
+#updating table 
+	mycursor.execute("""
+		update Media
+		set Availability = 1, Due_date = null, Member_id = null
+		where Media.Dewey_decimal_code = %s""", (dewey_decimal_code,))
+	connection.commit()
+	print("Item returned!")
+
 
 
 def edit_password():
@@ -635,12 +702,14 @@ def get_sum_media_type(media_type):
 		result = mycursor.fetchone()[0]
 	return result
 
+
 def get_sum_media():
 	sum_books = get_sum_media_type(1)
 	sum_dvds = get_sum_media_type(2)
 	sum_items = get_sum_media_type(3)
 	total = sum_books + sum_dvds + sum_items
 	print("The total number of media (books/dvds/items) in the library is:", total)
+
 
 def get_sum_available():
 	table = mycursor.execute("""
@@ -660,10 +729,12 @@ def locate_media(media_info, dewey_decimal_index):
 	location_info = mycursor.fetchall()
 	print("Location is: ", location_info)
 
+
 def search_media():
 	correct = "0" #to be used in input validation later
 	print("What would you like to search by? \nSearch Menu: \n1 - Dewey Decimal Code \n2 - Title/Name \n3 - Genre (Book and Dvd only) \n4 - Author/Director (Book and Dvd only) \n5 - Quit (or press any key)")
 	option = input("Please enter the number of the search method you would like to use: ")
+
 #searching by dewey decimal code
 	if option == "1":
 		Dewey_decimal_code = input("Please enter the Dewey decimal code of the media you are searching for: ")
@@ -686,6 +757,7 @@ def search_media():
 		else:
 			print("Returning to search menu...\n")
 			search_media()
+
 #searching by title
 	elif option == "2":
 		media_name = input("Please enter the title/name of the media you are searching for: ")
@@ -725,6 +797,7 @@ def search_media():
 	elif option == "3":
 		media_type = input("Please enter the type of media you are searching for (1 = Book, 2 = Dvd): ")
 		print("Searching by genre: ")
+
 #searching books
 		if media_type == "1":
 			genre =  input("Please enter the genre you are looking for: ")
@@ -780,6 +853,7 @@ def search_media():
 #searching by author/director
 	elif option == "4":  
 		media_type = input("Please enter the type of media you are searching for (1 = Book, 2 = Dvd): ")
+
 #searching books
 		if media_type == "1":
 			author = input("Please enter the author you are looking for: ")
