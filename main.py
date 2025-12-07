@@ -157,7 +157,28 @@ def Show_Tables():
             Show_Tables()
 
 def Delete_Tables():
-	Show_Tables()
+	print("What would you like to delete? \nMenu: \n1 - Media information \n2 - Patron information \n3 - Librarian information \n0 - Quit")
+	menuFunct = input("Please enter the number of the menu option you would like to use: ")
+	match table:
+        case 0:
+            clear(  )
+            return
+        case 1:
+			dewey_dec = input("Plase enter the media's dewey decimal code: ")
+            okay = input("Are you sure? (y/n): ")
+			if(okay == "y"):
+				sq.delete_media(dewey_dec)
+        case 2:
+			id = input("Please enter the patron ID: ")
+        	okay = input("Are you sure? (y/n): ")
+			if(okay == "y"):
+				sq.delete_patron(id)
+        case 3:
+			id = input("Please enter the librarian ID: ")
+            okay = input("Are you sure? (y/n): ")
+			if(okay == "y"):
+				sq.delete_librarian(id)
+
 
 
 def main():
