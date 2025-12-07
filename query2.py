@@ -256,21 +256,75 @@ def show_locations():
         for row in table_info:
                 print(row)
 
-def add_media_book(author, genre, DDC):
-#needs done
+def add_media_book(Author, Genre, DDC):
+	try:
+		mycursor.execute("INSERT Media_Book(Author, Genre, Dewey_decimal_code)VALUES(%s,%s,%s)", (Author, Genre, DDC))
+		db.commit()
+	except mysql.connector.IntegrityError as err:
+		print("Error: {}".format(err))
+		return err
+	
+	print("New Media Book added!")
+	print("New Media Book Table: ")
+	mycursor.execute("SELECT * FROM Media_Book")
+	for x in mycursor:
+		print(x)
+	ack = input("Database Updated [press ENTER to cont. ]")
+	if ack == 1:
+		db.commit()
 
 
 def add_media_dvd(director, genre, DDC):
-#needs done
+        try:
+                mycursor.execute("INSERT Media_Book(Director, Genre, Dewey_decimal_code)VALUES(%s,%s,%s)", (director, Genre, DDC))
+                db.commit()
+        except mysql.connector.IntegrityError as err:
+                print("Error: {}".format(err))
+                return err
+
+        print("New Media DVD added!")
+        print("New Media DVD Table: ")
+        mycursor.execute("SELECT * FROM Media_dvd")
+        for x in mycursor:
+                print(x)
+        ack = input("Database Updated [press ENTER to cont. ]")
+        if ack == 1:
+                db.commit()
 
 
 def add_media_item(DDC):
-
-
+        try:
+                mycursor.execute("INSERT Media_item(Dewey_decimal_code)VALUES(%s)", (DDC))
+        except mysql.connector.IntegrityError as err:
+                print("Error: {}".format(err))
+                return err
+        print("New Media Item added!")
+        print("New Media Item Table: ")
+        mycursor.execute("SELECT * FROM Media_item")
+        for x in mycursor:
+                print(x)
+        ack = input("Database Updated [press Enter to cont. ]")
+        if ack == 1:
+                db.commit()
 
 
 def add_media(DDC, Summary, Media_name, Availability, Copies, Due_date, Member_id):
-#needs done
+        try:
+                mycursor.execute("INSERT Media(Dewey_decimal_code, Summary, Media_name, Availability, Copies, Due_date, Member_id)VALUES(%s,%s,%s,%s,%s,%s,%s)", (DDC, Summary, Media_name, Availability, Copies, Due_date, Member_id))
+                db.commit()
+        except mysql.connector.IntegrityError as err:
+                print("Error: {}".format(err))
+                return err
+        print("New Media added!")
+        print("New Media Table: ")
+        mycursor.execute("SELECT * FROM Media")
+        for x in mycursor:
+                print(x)
+        ack = input("Database Updated [press Enter to cont. ]")
+        if ack == 1:
+                db.commit()
+
+
 
 def add_patron(Member_id, Patron_password, Patron_name, Wishlist):
 	try:
@@ -308,7 +362,22 @@ def add_librarian(Admin_id, Librarian_password, Librarian_name):
 
 
 def add_waitlist(id, DDC, date):
-#needs done
+        try:
+                mycursor.execute("INSERT Waitlist(Patron_id, Dewey_decimal_code, Due_date)VALUES(%s,%s,%s)", (id, DDC, date))
+                db.commit()
+        except mysql.connector.IntegrityError as err:
+                print("Error: {}".format(err))
+                return err
+        print("New Waitlist added!")
+        print("New Waitlist Table: ")
+        mycursor.execute("SELECT * FROM Waitlist")
+        for x in mycursor:
+                print(x)
+        ack = input("Database Updated [press Enter to cont. ]")
+        if ack == 1:
+                db.commit()
+
+
 
 
 
