@@ -339,7 +339,7 @@ def add_patron(Member_id, Patron_password, Patron_name, Wishlist):
 		return err
 	print("New Patron added!")
 	print("New Patron Table: ")
-	mycursor.execute("SELECT * FROM Patron")
+	mycursor.execute("SELECT * FROM Patron WHERE Member_id = %s", (Member_id,))
 	for x in mycursor:
 		print(x)
 	ack = input("Database Updated [press Enter to cont. ]")
@@ -357,7 +357,7 @@ def add_librarian(Admin_id, Librarian_password, Librarian_name):
 	
 	print("New Librarian added!")
 	print("New Librarian Table: ")
-	mycursor.execute("SELECT * FROM Librarian")
+	mycursor.execute("SELECT * FROM Librarian WHERE Admin_id = %s", (Admin_id,))
 	for x in mycursor:
 		print(x)
 	ack = input("Database Updated [press ENTER to cont. ]")
@@ -373,6 +373,9 @@ def add_waitlist(id, DDC, date):
                 print("Error: {}".format(err))
                 return err
         print("New Waitlist added!")
+        mycursor.execute("SELECT * From Waitlist Where Patron_id = %s and Dewey_decimal_code = %s", (id, DDC,))
+        for x in mycursor:
+            print(x)
         print("New Waitlist Table: ")
         mycursor.execute("SELECT * FROM Waitlist")
         for x in mycursor:
@@ -389,6 +392,9 @@ def add_location(Shelf_number, Media_dewey_decimal_code, Shelf_row, Cardinal_dir
                 print("Error: {}".format(err))
                 return err
         print("New Location added!")
+        mycursor.execute("select * from Location where Media_dewey_decimal_code = %s and Shelf_number = %s", (Media_dewey_decimal_code, Shelf_number,))
+        for x in mycursor:
+            print(x)
         print("New Location Table: ")
         mycursor.execute("SELECT * FROM Location")
         for x in mycursor:
