@@ -256,6 +256,8 @@ def show_locations():
         for row in table_info:
                 print(row)
 
+
+#Add Funcs
 def add_media_book(Author, Genre, DDC):
 	try:
 		mycursor.execute("INSERT Media_Book(Author, Genre, Dewey_decimal_code)VALUES(%s,%s,%s)", (Author, Genre, DDC))
@@ -378,7 +380,20 @@ def add_waitlist(id, DDC, date):
                 db.commit()
 
 
-
+def add_location(Shelf_number, Media_dewey_decimal_code, Shelf_row, Cardinal_direction):
+        try:
+                mycursor.execute("INSERT Media_item(Shelf_number, Media_dewey_decimal_code, Shelf_row, Cardinal_direction)VALUES(%s,$s,%s,%s)", (Shelf_number, Media_dewey_decimal_code, Shelf_row, Cardinal_direction))
+        except mysql.connector.IntegrityError as err:
+                print("Error: {}".format(err))
+                return err
+        print("New Location added!")
+        print("New Location Table: ")
+        mycursor.execute("SELECT * FROM Location")
+        for x in mycursor:
+                print(x)
+        ack = input("Database Updated [press Enter to cont. ]")
+        if ack == 1:
+                db.commit()
 
 
 #not sure where is best to put this but for use in reserve and checkout functions
@@ -667,7 +682,7 @@ def edit_location():
 	show_Location()
 	ack = input("press Enter to cont. ")
 
-
+#Delete Funcs
 def delete_waitlist(condition : str):
         try:
                 mycursor.execute("DELETE FROM Waitlist WHERE {}".format(condition))
@@ -916,7 +931,7 @@ def search_media():
 				for row in table_info:
 					print(num, row)
 					num += 1
-			
+
 #searching dvds
 		elif media_type == "2":
 			genre = input("Please enter the genre you are looking for: ")
@@ -932,12 +947,12 @@ def search_media():
 				for row in table_info:
 					print(num, row)
 					num += 1
-			
+
 		else:
 			print("Invalid input")
-				
+
 		selection = 1
-		if len(table_info) > 1:   
+		if len(table_info) > 1:
 			while True:
 				try:
 					selection = int(input("Please enter the number of the media you want to know the location of: "))
@@ -952,7 +967,7 @@ def search_media():
 		else:
 			print("Returning to search menu...\n")
 			search_media()
-			
+
 #searching by author/director
 	elif option == "4":  
 		media_type = input("Please enter the type of media you are searching for (1 = Book, 2 = Dvd): ")
@@ -987,10 +1002,10 @@ def search_media():
 				for row in table_info:
 					print(num, row)
 					num += 1
-		else:	   
+		else:
 			print("Invalid input")
 
-		selection = 1   
+		selection = 1
 		if len(table_info) > 1:
 			while True:
 				try:
@@ -999,22 +1014,15 @@ def search_media():
 				except ValueError:
 					print("Invalid input")
 			print(table_info[selection - 1])
-			
+
 		while (correct != "y") and (correct != "n") and (correct != "Y") and (correct != "N"):
 			correct = input("Is this the media you were looking for? (y - Yes, n - No) ")
 		if (correct == "y") or (correct == "Y"):
 			locate_media(table_info[selection - 1], 1)
-		else:   
+		else:
 			print("Returning to search menu...\n")
 			search_media()
-			
-	elif option == "5":     
+
+	elif option == "5":
 		return
-					
-		     
-
-
-
-
-
 

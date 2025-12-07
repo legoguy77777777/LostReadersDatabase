@@ -108,12 +108,12 @@ def Add_Tuples():
 
 def Show_Tables():
     clear()
-    sq.Show_Database()
+    sq.show_database()
     table = int(input("Which table # would you like to see? (enter 0 to quit): "))
 
     while table < 0 or table > 9:
         print("Please choose from the available table #")
-        sq.Show_Database()
+        sq.show_database()
         table = int(input("Which table # would you like to see? (enter 0 to quit): "))
     match table:
         case 0:
