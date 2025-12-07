@@ -674,23 +674,25 @@ def edit_password():
 def edit_location():
 	media_exists = 0
 	while media_exists == 0:
-		DDC = input("Please enter the Dewey Decimal Code associated with the item you wishh to change the Location of: ")
+		DDC = input("Please enter the Dewey Decimal Code associated with the item you wish to change the Location of: ")
 		mycursor.execute("SELECT * FROM Location WHERE Media_dewey_decimal_code = (%s)", (DDC,))
 		for x in mycursor:
 			media_exists += 1
 		if media_exists >= 1:
 			new_shelf_number = input("Please input a new shelf number for the Item: ")
-			mycursor.execute("UPDATE Location SET Shelf_number = (%s) WHERE Media_dewey_decimal_code", (new_shelf_number, DDC))
-			db.commit()
+			new_shelf_row = input("Please input a new shelf row for the Item: ")
+			new_card_direction = input("Please input a new cardinal direction for the Item: ")
+			mycursor.execute("UPDATE Location SET Shelf_number = %s, Shelf_row = %s, Cardinal_direction = %s WHERE Media_dewey_decimal_code = %s", (new_shelf_number, new_shelf_row, new_card_direction, DDC))
+			connection.commit()
 	print("Location Updated. Now printing table...")
-	show_Location()
+	show_locations()
 	ack = input("press Enter to cont. ")
 
 #Delete Funcs
 def delete_waitlist(condition : str):
         try:
                 mycursor.execute("DELETE FROM Waitlist WHERE {}".format(condition))
-                db.commit()
+                connection.commit()
         except mysql.connector.errors.IntegrityError or mysql.connector.errors.ProgrammingError as err:
                 print("Error: Condition does not exist. {}".format(err))
                 end = input("Press Enter to continue..." )
@@ -706,7 +708,7 @@ def delete_waitlist(condition : str):
 def delete_media_book(condition : str):
         try:
                 mycursor.execute("DELETE FROM Media_Book WHERE {}".format(condition))
-                db.commit()
+                connection.commit()
         except mysql.connector.errors.IntegrityError or mysql.connector.errors.ProgrammingError as err:
                 print("Error: Condition does not exist. {}".format(err))
                 end = input("Press Enter to continue..." )
@@ -721,7 +723,7 @@ def delete_media_book(condition : str):
 def delete_media_dvd(condition : str):
         try:
                 mycursor.execute("DELETE FROM Media_dvd WHERE {}".format(condition))
-                db.commit()
+                connection.commit()
         except mysql.connector.errors.IntegrityError or mysql.connector.errors.ProgrammingError as err:
                 print("Error: Condition does not exist. {}".format(err))
                 end = input("Press Enter to continue..." )
@@ -735,7 +737,7 @@ def delete_media_dvd(condition : str):
 def delete_media_item(condition : str):
         try:
                 mycursor.execute("DELETE FROM Media_item WHERE {}".format(condition))
-                db.commit()
+                connection.commit()
         except mysql.connector.errors.IntegrityError or mysql.connector.errors.ProgrammingError as err:
                 print("Error: Condition does not exist. {}".format(err))
                 end = input("Press Enter to continue..." )
