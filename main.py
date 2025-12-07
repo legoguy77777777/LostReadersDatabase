@@ -197,7 +197,7 @@ def main():
 			case 3:
 				innerCont == "y"
 				while(innerCont == "y"):
-					print("What would you like to do? \nPatron Menu: \n1 - search media \n2 - locate media \n3 - reserve media \n4 - checkout media \n5 - edit password \n0 - Quit")
+					print("What would you like to do? \nPatron Menu: \n1 - search media \n2 - locate media \n3 - reserve media \n4 - remove media from waitlist \n5 - edit password \n6 - edit password \n0 - Quit")
 					patronFunct = input("Please enter the number of the menu option you would like to use: ")
 					match patronFunct:
 						case 0:
@@ -210,7 +210,12 @@ def main():
 							sq.reserve_media()
 						case 4:
 							sq.checkout_media()
-						case 4:
+						case 5:
+							id = input("Please enter your patron ID: ")
+           					if(validate_member(id)):
+			  					dewey_dec = input("Plase enter the media's dewey decimal code: ")
+			 					sq.delete_waitlist(id, dewey_dec)
+						case 6:
 							sq.edit_password()
 					innerCont = input("Would you like to continue (y/n): ")
 			case 4:
