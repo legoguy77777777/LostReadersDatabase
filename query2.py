@@ -326,6 +326,16 @@ def validate_member(id):
 	else:   
 		return True
 
+def validate_staff(id):
+	mycursor.execute("""
+		select Admin_id
+		from Librarian
+		where Librarian.Admin_id = %s""", (id,))
+	table = mycursor.fetchall()
+	if not table:
+		return False
+	else:   
+		return True
 			
 #same as before
 def get_due_date(DDC):
