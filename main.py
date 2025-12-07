@@ -2,10 +2,9 @@
 # Main function execution
 # CS2300 Final
 
-import sql_query.py as sq
+import query2.py as sq
 import time
 import os
-import datetime
 
 def Add_Tuples():
     clear()
