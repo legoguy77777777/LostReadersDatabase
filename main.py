@@ -9,12 +9,12 @@ import datetime
 
 def Add_Tuples():
     clear()
-    sq.Show_Database()
+    sq.show_database()
     table = int(input("Which table # would you like to add to? [0 to exit]: "))
     
     while table < 0 or table > 9:
         print("Please choose from the available table #")
-        sq.Show_Database()
+        sq.show_database()
         table = int(input("Which table # would you like to see?: "))
     match table:
         case 0:
@@ -31,7 +31,7 @@ def Add_Tuples():
                 while authorization_no not in range(0,4):
                     authorization_no = int(input("Please enter ID number:"))
                 
-                sq.Add_Librarian(authorization_no,password,name)
+                sq.add_librarian(authorization_no,password,name)
 		case 2:
             name = input("Please enter your name: ")
             password = input("Plase enter a password: ")
@@ -44,63 +44,65 @@ def Add_Tuples():
                 while authorization_no not in range(0,4):
                     authorization_no = int(input("Please enter ID number:"))
                 
-                sq.Add_Patron(authorization_no,password,name,null)
+                sq.add_patron(authorization_no,password,name,null)
 		case 3:
 			id = input("Please enter your librarian ID: ")
-            #if ID in librarian IDs
-            Media_name = input("Plase enter a media's title/name: ")
-			dewey_dec = input("Plase enter a media's dewey decimal code: ")
-			summary = input("Plase enter a media's summary: ")
-			copies = input("Plase enter number of copies of media that will be stocked: ")
-            sq.Add_Media(dewey_dec,summary,Media_name,1,copies,null,null)
+            if(validate_staff(id)):
+              Media_name = input("Plase enter a media's title/name: ")
+			  dewey_dec = input("Plase enter a media's dewey decimal code: ")
+			  summary = input("Plase enter a media's summary: ")
+			  copies = input("Plase enter number of copies of media that will be stocked: ")
+              sq.add_media(dewey_dec,summary,Media_name,1,copies,null,null)
 		case 4:
 			id = input("Please enter your librarian ID: ")
-            #if ID in librarian IDs
-            Media_name = input("Plase enter a media's title/name: ")
-			dewey_dec = input("Plase enter a media's dewey decimal code: ")
-			summary = input("Plase enter a media's summary: ")
-			copies = input("Plase enter number of copies of media that will be stocked: ")
-            sq.Add_Media(dewey_dec,summary,Media_name,1,copies,null,null)
-			Author = input("Plase enter the book's author: ")
-			    Genre = input("Plase enter the book's genre: ")
-			    sq.Add_Media_Book(Author,Genre,dewey_dec)
+            if(validate_staff(id)):
+              Media_name = input("Plase enter a media's title/name: ")
+			  dewey_dec = input("Plase enter a media's dewey decimal code: ")
+			  summary = input("Plase enter a media's summary: ")
+			  copies = input("Plase enter number of copies of media that will be stocked: ")
+              sq.add_media(dewey_dec,summary,Media_name,1,copies,null,null)
+			  Author = input("Plase enter the book's author: ")
+			  Genre = input("Plase enter the book's genre: ")
+			  sq.add_media_book(Author,Genre,dewey_dec)
 		case 5:
 			id = input("Please enter your librarian ID: ")
-            #if ID in librarian IDs
-            Media_name = input("Plase enter a media's title/name: ")
-			dewey_dec = input("Plase enter a media's dewey decimal code: ")
-			summary = input("Plase enter a media's summary: ")
-			copies = input("Plase enter number of copies of media that will be stocked: ")
-            sq.Add_Media(dewey_dec,summary,Media_name,1,copies,null,null)
-			Director = input("Plase enter the dvd's Director: ") 
-				Genre = input("Plase enter the dvd's genre: ")
-				sq.Add_Media_dvd(Director,Genre,dewey_dec)
+            if(validate_staff(id)):
+              Media_name = input("Plase enter a media's title/name: ")
+			  dewey_dec = input("Plase enter a media's dewey decimal code: ")
+			  summary = input("Plase enter a media's summary: ")
+			  copies = input("Plase enter number of copies of media that will be stocked: ")
+              sq.add_media(dewey_dec,summary,Media_name,1,copies,null,null)
+			  Director = input("Plase enter the dvd's Director: ") 
+			  Genre = input("Plase enter the dvd's genre: ")
+			  sq.add_media_dvd(Director,Genre,dewey_dec)
 		case 6:
 			id = input("Please enter your librarian ID: ")
-            #if ID in librarian IDs
-            Media_name = input("Plase enter a media's title/name: ")
-			dewey_dec = input("Plase enter a media's dewey decimal code: ")
-			summary = input("Plase enter a media's summary: ")
-			copies = input("Plase enter number of copies of media that will be stocked: ")
-            sq.Add_Media(dewey_dec,summary,Media_name,1,copies,null,null)
-			sq.Add_Media_item(dewey_dec)
+            if(validate_staff(id)):
+              Media_name = input("Plase enter a media's title/name: ")
+			  dewey_dec = input("Plase enter a media's dewey decimal code: ")
+			  summary = input("Plase enter a media's summary: ")
+			  copies = input("Plase enter number of copies of media that will be stocked: ")
+              sq.add_media(dewey_dec,summary,Media_name,1,copies,null,null)
+			  sq.add_media_item(dewey_dec)
 		case 7:
 			id = input("Please enter your librarian ID: ")
-            #if ID in librarian IDs
-			dewey_dec = input("Plase enter the media's dewey decimal code: ")
-			Shelf_number  = input("Plase enter the shelf number the media is located: ")
-			Shelf_row = input("Plase enter the shelf row the media is located: ")
-			Cardinal_direction  = input("Plase enter the Cardinal direction the exposed part of the media is facing: ")
-			sq.Add_Location(Shelf_number, Media_dewey_decimal_code,Shelf_row,Cardinal_direction)
+            if(validate_staff(id)):
+			  dewey_dec = input("Plase enter the media's dewey decimal code: ")
+			  Shelf_number  = input("Plase enter the shelf number the media is located: ")
+			  Shelf_row = input("Plase enter the shelf row the media is located: ")
+			  Cardinal_direction  = input("Plase enter the Cardinal direction the exposed part of the media is facing: ")
+			  sq.add_location(Shelf_number, Media_dewey_decimal_code,Shelf_row,Cardinal_direction)
 		case 8:
 			id = input("Please enter your librarian ID: ")
-            #if ID in librarian IDs
-				#add all info for edits
+            if(validate_staff(id)):
+				dewey_dec = input("Plase enter the media's dewey decimal code: ")
+				due_date = input("Plase enter the media's due date: ")
+				sq.add_waitlist(id, dewey_dec, due_date)
 		case 9:
 			id = input("Please enter your patron ID: ")
-            #if ID in patron IDs
-			dewey_dec = input("Plase enter the media's dewey decimal code: ")
-			sq.Add_Waitlist(id, dewey_dec, 2026-01-01)
+            if(validate_member(id)):
+			  dewey_dec = input("Plase enter the media's dewey decimal code: ")
+			  sq.add_waitlist(id, dewey_dec, 2026-01-01)
 
 
 
@@ -109,7 +111,7 @@ def Show_Tables():
     sq.Show_Database()
     table = int(input("Which table # would you like to see? (enter 0 to quit): "))
 
-    while table < 0 or table > 4:
+    while table < 0 or table > 9:
         print("Please choose from the available table #")
         sq.Show_Database()
         table = int(input("Which table # would you like to see? (enter 0 to quit): "))
@@ -118,44 +120,41 @@ def Show_Tables():
             clear(  )
             return
         case 1:
-            sq.Show_Librarians()
+            sq.show_librarians()
             okay = input("press ENTER")
             Show_Tables()
         case 2:
-            sq.Show_Patrons()
+            sq.show_patrons()
             okay = input("press ENTER")
             Show_Tables()
         case 3:
-            sq.Show_Media()
+            sq.show_media()
             okay = input("press ENTER")
             Show_Tables()
         case 4:
-            sq.Show_Media_Books()
+            sq.show_media()
             okay = input("press ENTER")
             Show_Tables()
 		case 5:
-            sq.Show_Media_dvds()
+            sq.show_media()
             okay = input("press ENTER")
             Show_Tables()
 		case 6:
-            sq.Show_Media_item()
+            sq.show_media()
             okay = input("press ENTER")
             Show_Tables()
 		 case 7:
-            sq.Show_Locations()
+            sq.show_locations()
             okay = input("press ENTER")
             Show_Tables()
 		 case 8:
-            sq.Show_Overdue_flags()
+            sq.show_overdue_flags()
             okay = input("press ENTER")
             Show_Tables()
 		 case 9:
-            sq.Show_Waitlists()
+            sq.show_waitlists()
             okay = input("press ENTER")
             Show_Tables()
-		
-        case 0:
-            return 0
 
 
 def main():
