@@ -333,7 +333,7 @@ def add_media(DDC, Summary, Media_name, Availability, Copies):
 def add_patron(Member_id, Patron_password, Patron_name, Wishlist):
 	try:
 		mycursor.execute("INSERT Patron(Member_id, Patron_password, Patron_name, wishlist)VALUES(%s,%s,%s,%s)", (Member_id, Patron_password, Patron_name, Wishlist))
-		db.commit()
+		connection.commit()
 	except mysql.connector.IntegrityError as err:
 		print("Error: {}".format(err))
 		return err
@@ -344,13 +344,13 @@ def add_patron(Member_id, Patron_password, Patron_name, Wishlist):
 		print(x)
 	ack = input("Database Updated [press Enter to cont. ]")
 	if ack == 1:
-		db.commit()
+		connection.commit()
 
 
 def add_librarian(Admin_id, Librarian_password, Librarian_name):
 	try:
 		mycursor.execute("INSERT Librarian(Admin_id, Librarian_password, Librarian_name)VALUES(%s,%s,%s)", (Admin_id, Librarian_password, Librarian_name))
-		db.commit()
+		connection.commit()
 	except mysql.connector.IntegrityError as err:
 		print("Error: {}".format(err))
 		return err
@@ -362,13 +362,13 @@ def add_librarian(Admin_id, Librarian_password, Librarian_name):
 		print(x)
 	ack = input("Database Updated [press ENTER to cont. ]")
 	if ack == 1:
-		db.commit()
+		connection.commit()
 
 
 def add_waitlist(id, DDC, date):
         try:
                 mycursor.execute("INSERT Waitlist(Patron_id, Dewey_decimal_code, Due_date)VALUES(%s,%s,%s)", (id, DDC, date))
-                db.commit()
+                connection.commit()
         except mysql.connector.IntegrityError as err:
                 print("Error: {}".format(err))
                 return err
@@ -379,12 +379,12 @@ def add_waitlist(id, DDC, date):
                 print(x)
         ack = input("Database Updated [press Enter to cont. ]")
         if ack == 1:
-                db.commit()
+                connection.commit()
 
 
 def add_location(Shelf_number, Media_dewey_decimal_code, Shelf_row, Cardinal_direction):
         try:
-                mycursor.execute("INSERT Media_item(Shelf_number, Media_dewey_decimal_code, Shelf_row, Cardinal_direction)VALUES(%s,$s,%s,%s)", (Shelf_number, Media_dewey_decimal_code, Shelf_row, Cardinal_direction))
+                mycursor.execute("INSERT Location(Shelf_number, Media_dewey_decimal_code, Shelf_row, Cardinal_direction)VALUES(%s,%s,%s,%s)", (Shelf_number, Media_dewey_decimal_code, Shelf_row, Cardinal_direction))
         except mysql.connector.IntegrityError as err:
                 print("Error: {}".format(err))
                 return err
@@ -395,7 +395,7 @@ def add_location(Shelf_number, Media_dewey_decimal_code, Shelf_row, Cardinal_dir
                 print(x)
         ack = input("Database Updated [press Enter to cont. ]")
         if ack == 1:
-                db.commit()
+                connection.commit()
 
 
 #not sure where is best to put this but for use in reserve and checkout functions
@@ -614,8 +614,8 @@ def edit_password():
 	id_exists = 0
 	id_type = 0
 	id_type = input("Please enter '1' for Patron or '2' for Librarian (enter 0 to quit)")
-	if id_type == 0:
-		quit()
+	if id_type == "0":
+		return
 	while id_exists == 0:
 		id = input("Please enter your ID (enter 0 to quit)")
 		if id == '0':
@@ -639,16 +639,18 @@ def edit_password():
 			ack = input("Press Enter cont. ")
 
 	pass_correct = 0
-	while pass_connect == 0:
+	while pass_correct == 0:
 		pswd = input("Please enter current password (enter 0 to quit): ")
 		if pswd == '0':
 			quit()
 		if id_type == '1':
-			mycursor.execute(f"SELECT * FROM Patron WHERE Member_id = {id} AND Patron_password = {pswd}")
+			mycursor.execute(f"SELECT * FROM Patron WHERE Member_id = %s AND Patron_password = %s", (id, pswd,))
 			for x in mycursor:
 				pass_correct += 1
 		if id_type == '2':
-			mycursor.execute(f"SELECT * FROM Librarian WHERE Admin_id = {id} AND Librarian_password = {pswd}")
+			mycursor.execute(f"SELECT * FROM Librarian WHERE Admin_id = %s AND Librarian_password = %s", (id, pswd,))
+			for x in mycursor:
+				pass_correct += 1
 		if pass_correct == 0:
 			print("Invalid Password provided. Please try again. ")
 			ack =input("Press Enter to cont.")
@@ -657,11 +659,11 @@ def edit_password():
 		if new_pswd ==  '0':
 			quit()
 		if id_type == '1':
-			mycursor.execute(f"UPDATE Patron SET Patron_password = '{new_pswd}' WHERE Member_id = {id} AND Patron_password = {pswd}")
+			mycursor.execute(f"UPDATE Patron SET Patron_password = %s WHERE Member_id = %s AND Patron_password = %s", (new_pswd, id, pswd,))
 			for x in mycursor:
 				print(x)
 		if id_type == '2':
-			mycursor.execute(f"UPDATE Librarian SET Librarian_password = '{new_pswd}' WHERE Admin_id = {id} AND Librarian_password = {pswd}")
+			mycursor.execute(f"UPDATE Librarian SET Librarian_password = %s WHERE Admin_id = %s AND Librarian_password = %s", (new_pswd, id, pswd,))
 			for x in mycursor:
 				print(x)
 
