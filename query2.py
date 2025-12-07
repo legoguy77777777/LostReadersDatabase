@@ -186,8 +186,9 @@ def show_media():
 # printing table of books
 	print("Books:")
 	table = mycursor.execute("""
-		select Media_book.Dewey_decimal_code, Media.Media_name, Media_book.Author, Media_book.Genre, Media.Availability, Medi$
+		select Media_book.Dewey_decimal_code, Media.Media_name, Media_book.Author, Media_book.Genre, Media.Availability, Media.Copies
 		from Media, Media_book
+
 		where Media.Dewey_decimal_code = Media_book.Dewey_decimal_code;
 		""")
 	table_info = mycursor.fetchall()
@@ -197,7 +198,7 @@ def show_media():
 # printing table of dvds
 	print("Dvds:")
 	table = mycursor.execute("""
-		select Media_dvd.Dewey_decimal_code, Media.Media_name, Media_dvd.Director, Media_dvd.Genre, Media.Availability, Media$
+		select Media_dvd.Dewey_decimal_code, Media.Media_name, Media_dvd.Director, Media_dvd.Genre, Media.Availability, Media.Copies
 		from Media, Media_dvd
 		where Media.Dewey_decimal_code = Media_dvd.Dewey_decimal_code;
 		""")
@@ -278,7 +279,7 @@ def add_media_book(Author, Genre, DDC):
 
 def add_media_dvd(director, genre, DDC):
         try:
-                mycursor.execute("INSERT Media_Book(Director, Genre, Dewey_decimal_code)VALUES(%s,%s,%s)", (director, Genre, DDC))
+                mycursor.execute("INSERT Media_Dvd(Director, Genre, Dewey_decimal_code)VALUES(%s,%s,%s)", (director, genre, DDC))
                 db.commit()
         except mysql.connector.IntegrityError as err:
                 print("Error: {}".format(err))
@@ -310,10 +311,10 @@ def add_media_item(DDC):
                 db.commit()
 
 
-def add_media(DDC, Summary, Media_name, Availability, Copies, Due_date, Member_id):
+def add_media(DDC, Summary, Media_name, Availability, Copies):
         try:
-                mycursor.execute("INSERT Media(Dewey_decimal_code, Summary, Media_name, Availability, Copies, Due_date, Member_id)VALUES(%s,%s,%s,%s,%s,%s,%s)", (DDC, Summary, Media_name, Availability, Copies, Due_date, Member_id))
-                db.commit()
+                mycursor.execute("INSERT Media(Dewey_decimal_code, Summary, Media_name, Availability, Copies, Due_date, Member_id)VALUES(%s,%s,%s,%s,%s,null,null)", (DDC, Summary, Media_name, Availability, Copies))
+                connection.commit()
         except mysql.connector.IntegrityError as err:
                 print("Error: {}".format(err))
                 return err
