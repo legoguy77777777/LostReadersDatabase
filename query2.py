@@ -223,14 +223,8 @@ def show_attributes(table_name):
 	for x in mycursor:
 		print(x)
 
-#do we even need this? it is techically the search fuction
 
-
-
-def show_wishlist():
-#needs done
-
-def show_waitlist():
+def show_waitlists():
 	print("Waitlist:")
 	table = mycursor.execute("""
 		select Media.Dewey_decimal_code, Media.Media_name, Patron.Patron_name, Patron.Member_id, Media.Due_date
@@ -242,8 +236,38 @@ def show_waitlist():
 		print(row)
 
         
-def overdue_flag():
+def show_overdue_flags():
+        print("\nOverdue_flag:")
+        table = mycursor.execute("""
+                select *
+                from Overdue_flag;
+                """)
+        table_info = mycursor.fetchall()
+        for row in table_info:
+                print(row)
+
+def show_locations():
+        print("\nLocation:")
+        table = mycursor.execute("""
+                select *
+                from Location;
+                """)
+        table_info = mycursor.fetchall()
+        for row in table_info:
+                print(row)
+
+def add_media_book(author, genre, DDC):
 #needs done
+
+
+def add_media_dvd(director, genre, DDC):
+#needs done
+
+
+def add_media_item(DDC):
+
+
+
 
 def add_media(DDC, Summary, Media_name, Availability, Copies, Due_date, Member_id):
 #needs done
@@ -352,7 +376,7 @@ def get_due_date(DDC):
 >>>>>>> 093def56152e8ac12b0e37642deeef7f6c889eaf
 def reserve_media():
 	dewey_decimal_code = input("Please enter the Dewey decimal code of the item you would like to reserve: ")
-			
+
 #checking if item exists
 	exists = validate_existance(dewey_decimal_code)
 	if not exists:
