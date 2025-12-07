@@ -65,7 +65,7 @@ def show_database():
 		""")
 	table_info = mycursor.fetchall()
 	for row in table_info:
-	print(row)
+		print(row)
 
 #printing Patron table
 	print("\nPatron:")
@@ -454,10 +454,10 @@ def get_due_date(DDC):
 	table = mycursor.fetchone()[0]
 	return table  
 
-<<<<<<< HEAD
-=======
+#<<<<<<< HEAD
+#=======
 
->>>>>>> 093def56152e8ac12b0e37642deeef7f6c889eaf
+#>>>>>>> 093def56152e8ac12b0e37642deeef7f6c889eaf
 def reserve_media():
 	dewey_decimal_code = input("Please enter the Dewey decimal code of the item you would like to reserve: ")
 
@@ -612,7 +612,7 @@ def edit_password():
 	id_exists = 0
 	id_type = 0
 	id_type = input("Please enter '1' for Patron or '2' for Librarian (enter 0 to quit)")
-	if id_type == 0;
+	if id_type == 0:
 		quit()
 	while id_exists == 0:
 		id = input("Please enter your ID (enter 0 to quit)")
@@ -647,12 +647,12 @@ def edit_password():
 				pass_correct += 1
 		if id_type == '2':
 			mycursor.execute(f"SELECT * FROM Librarian WHERE Admin_id = {id} AND Librarian_password = {pswd}")
-		pass_correct == 0:
+		if pass_correct == 0:
 			print("Invalid Password provided. Please try again. ")
 			ack =input("Press Enter to cont.")
 	while pass_correct == 1:
 		new_pswd = input("Please enter new password (enter 0 to quit):")
-		if new_pswd ==  '0';
+		if new_pswd ==  '0':
 			quit()
 		if id_type == '1':
 			mycursor.execute(f"UPDATE Patron SET Patron_password = '{new_pswd}' WHERE Member_id = {id} AND Patron_password = {pswd}")
@@ -687,7 +687,7 @@ def delete_waitlist(condition : str):
         try:
                 mycursor.execute("DELETE FROM Waitlist WHERE {}".format(condition))
                 db.commit()
-        except mysql.connector.errors.IntegrityError or mysql.connector.errors.ProgrammingError as>
+        except mysql.connector.errors.IntegrityError or mysql.connector.errors.ProgrammingError as err:
                 print("Error: Condition does not exist. {}".format(err))
                 end = input("Press Enter to continue..." )
                 return err
@@ -703,7 +703,7 @@ def delete_media_book(condition : str):
         try:
                 mycursor.execute("DELETE FROM Media_Book WHERE {}".format(condition))
                 db.commit()
-        except mysql.connector.errors.IntegrityError or mysql.connector.errors.ProgrammingError as>
+        except mysql.connector.errors.IntegrityError or mysql.connector.errors.ProgrammingError as err:
                 print("Error: Condition does not exist. {}".format(err))
                 end = input("Press Enter to continue..." )
                 return err
@@ -718,7 +718,7 @@ def delete_media_dvd(condition : str):
         try:
                 mycursor.execute("DELETE FROM Media_dvd WHERE {}".format(condition))
                 db.commit()
-        except mysql.connector.errors.IntegrityError or mysql.connector.errors.ProgrammingError as>
+        except mysql.connector.errors.IntegrityError or mysql.connector.errors.ProgrammingError as err:
                 print("Error: Condition does not exist. {}".format(err))
                 end = input("Press Enter to continue..." )
                 return err
@@ -732,7 +732,7 @@ def delete_media_item(condition : str):
         try:
                 mycursor.execute("DELETE FROM Media_item WHERE {}".format(condition))
                 db.commit()
-        except mysql.connector.errors.IntegrityError or mysql.connector.errors.ProgrammingError as>
+        except mysql.connector.errors.IntegrityError or mysql.connector.errors.ProgrammingError as err:
                 print("Error: Condition does not exist. {}".format(err))
                 end = input("Press Enter to continue..." )
                 return err
@@ -748,7 +748,7 @@ def delete_media(condition : str):
         try:
                 mycursor.execute("DELETE FROM Media WHERE {}".format(condition))
                 db.commit()
-        except mysql.connector.errors.IntegrityError or mysql.connector.errors.ProgrammingError as>
+        except mysql.connector.errors.IntegrityError or mysql.connector.errors.ProgrammingError as err:
                 print("Error: Condition does not exist. {}".format(err))
                 end = input("Press Enter to continue..." )
                 return err
