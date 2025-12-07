@@ -297,7 +297,7 @@ def add_media_dvd(director, genre, DDC):
 
 def add_media_item(DDC):
         try:
-                mycursor.execute("INSERT Media_item(Dewey_decimal_code)VALUES(%s)", (DDC))
+                mycursor.execute("INSERT Media_item(Dewey_decimal_code)VALUES(%s)", (DDC,))
                 connection.commit()
         except mysql.connector.IntegrityError as err:
                 print("Error: {}".format(err))
