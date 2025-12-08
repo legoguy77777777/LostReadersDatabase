@@ -2,7 +2,7 @@
 # Main function execution
 # CS2300 Final
 
-import query2.py as sq
+import query2 as sq
 import time
 import os
 
