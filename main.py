@@ -239,6 +239,7 @@ def main():
 							print(sq.get_sum_media(type))
 						case 7: #edit password
 							sq.edit_password()
+					innerCont = input("Would you like to continue (y/n): ")
 			case 3: #new patron
 				name = input("Please enter your name: ")
 				password = input("Plase enter a password: ")
