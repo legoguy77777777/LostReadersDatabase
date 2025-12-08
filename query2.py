@@ -236,6 +236,17 @@ def show_waitlists():
 	for row in table_info:
 		print(row)
 
+def show_patron_waitlist(id):
+	print("Waitlist:")
+	table = mycursor.execute("""
+		select Media.Dewey_decimal_code, Media.Media_name, Patron.Patron_name, Patron.Member_id, Media.Due_date
+		from Media, Patron, Waitlist
+		where Media.Dewey_decimal_code = Waitlist.Dewey_decimal_code and Waitlist.Patron_id = id
+		""")
+	table_info = mycursor.fetchall()
+	for row in table_info:
+		print(row)
+
         
 def show_overdue_flags():
         print("\nOverdue_flag:")
