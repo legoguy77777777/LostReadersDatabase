@@ -31,17 +31,15 @@ def Add_Tuples():
 				print("Please enter valid number... ")
 			sq.add_librarian(authorization_no,password,name)
 		case 2: #add patron
-                        name = input("Please enter your name: ")
-                        password = input("Plase enter a password: ")
-                        if password == '0':
-                                quit()
-                        authorization_no = None
-                        count = 0
-                        try:
-                                authorization_no = int(input("Please enter ID number:"))
-                        except ValueError:
-                                print("Please enter valid number... ")
-
+			name = input("Please enter your name: ")
+			password = input("Plase enter a password: ")
+			if password == '0':
+				quit()
+			authorization_no = None
+			try:
+				authorization_no = int(input("Please enter ID number:"))
+			except ValueError:
+				print("Please enter valid number... ")
 			sq.add_patron(authorization_no,password,name,null)
 		case 3: #add media
 			id = input("Please enter your librarian ID: ")
