@@ -6,6 +6,8 @@ import query2.py as sq
 import time
 import os
 
+authorization_lists = ('Patron', 'Admin')
+
 def Add_Tuples():
 	clear()
 	sq.show_database()
@@ -155,6 +157,10 @@ def Show_Tables():
 def Delete_Tables():
 	print("What would you like to delete? \nMenu: \n1 - Media information \n2 - Patron information \n3 - Librarian information \n0 - Quit")
 	menuFunct = input("Please enter the number of the menu option you would like to use: ")
+	while table < 0 or table > 9:
+		print("Please choose from the available option #")
+		print("What would you like to delete? \nMenu: \n1 - Media information \n2 - Patron information \n3 - Librarian information \n0 - Quit")
+		table = int(input("Please enter the number of the menu option you would like to use: "))
 	match menuFunct:
 		case 0:
 			clear(  )
@@ -181,19 +187,15 @@ def main():
 	cont = "y"
 	innerCont = "y"
 	while(cont == "y"):
-		print("What would you like to do? \nMenu: \n1 - Add to the system \n2 - View System Logs \n3 - Patron Functions \n4 - Admin Functions \n0 - Quit")
+		print("Are you a: \n1 - Patron \n2 - Librarian \n3 - New Patron \n4 - New Admin \n0 - Quit")
 		menuFunct = input("Please enter the number of the menu option you would like to use: ")
 		match menuFunct:
 			case 0:
 				break
 			case 1:
-				Add_Tuples()
-			case 2:
-				Show_Tables()
-			case 3:
 				innerCont == "y"
 				while(innerCont == "y"):
-					print("What would you like to do? \nPatron Menu: \n1 - search media \n2 - locate media \n3 - reserve media \n4 - remove media from waitlist \n5 - edit password \n6 - edit password \n0 - Quit")
+					print("What would you like to do? \nPatron Menu: \n1 - search media \n2 - locate media \n3 - reserve media \n4 -  checkout media \n5 - view wishlist \n6 - delete item from wishlist \n7 - edit password \n0 - Quit")
 					patronFunct = input("Please enter the number of the menu option you would like to use: ")
 					match patronFunct:
 						case 0:
@@ -207,17 +209,19 @@ def main():
 						case 4:
 							sq.checkout_media()
 						case 5:
+							sq.show_waitlists()
+						case 6:
 							id = input("Please enter your patron ID: ")
 							if(validate_member(id)):
 								dewey_dec = input("Plase enter the media's dewey decimal code: ")
-								sq.delete_waitlist(id, dewey_dec)
-						case 6:
+								sq.delete_waitlist(dewey_dec)
+						case 7:
 							sq.edit_password()
 					innerCont = input("Would you like to continue (y/n): ")
-			case 4:
+			case 2:
 				innerCont == "y"
 				while(innerCont == "y"):
-					print("What would you like to do? \nAdmin Menu: \n1 - return media \n2 - locate media \n3 - delete elements from system \n4 - edit password \n0 - Quit")
+					print("What would you like to do? \nAdmin Menu: \n1 - return media \n2 - edit media location \n3 - add media into system \n4 - delete elements from system \n5 - view overdue book \n6 - view media inventory \n7 - edit password \n0 - Quit")
 					adminFunct = input("Please enter the number of the menu option you would like to use: ")
 					match adminFunct:
 						case 0:
@@ -225,12 +229,45 @@ def main():
 						case 1:
 							sq.return_media()
 						case 2:
-							sq.return_media()
+							sq.edit_location()
 						case 3:
-							Delete_Tables()
+							Add_Tuples()
 						case 4:
+							Delete_Tables()
+						case 5:
+							sq.show_overdue_flags()
+						case 6:
+							print(sq.get_sum_available())
+							print(sq.get_sum_media())
+							print("Would you like to see how many books(1), dvds(2), or other itmes(3) there are: ")
+							type = int(input("Please enter the number of the menu option you would like to use: "))
+							print(sq.get_sum_media(type))
+						case 7:
 							sq.edit_password()
-					innerCont = input("Would you like to continue (y/n): ")
+			case 3:
+				name = input("Please enter your name: ")
+				password = input("Plase enter a password: ")
+				if password != 0:
+					authorization_no = 5
+					count = 0
+					for i in authorization_lists:
+						count +=1
+						print( "{}. ".format(count) + i)
+					while authorization_no not in range(0,4):
+						authorization_no = int(input("Please enter ID number:"))
+					sq.add_patron(authorization_no,password,name,null)
+			case 4:
+				name = input("Please enter your name: ")
+				password = input("Plase enter a password: ")
+				if password != 0:
+						authorization_no = 5
+						count = 0
+					for i in authorization_lists:
+						count +=1
+						print( "{}. ".format(count) + i)
+					while authorization_no not in range(0,4):
+						authorization_no = int(input("Please enter ID number:"))
+					sq.add_librarian(authorization_no,password,name)
 		cont = input("Would you like to continue (y/n): ")
 			
 
