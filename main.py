@@ -188,15 +188,15 @@ def main():
 	innerCont = "y"
 	while(cont == "y"):
 		print("Are you a: \n1 - Patron \n2 - Librarian \n3 - New Patron \n4 - New Admin \n0 - Quit")
-		menuFunct = input("Please enter the number of the menu option you would like to use: ")
+		menuFunct = int(input("Please enter the number of the menu option you would like to use: "))
 		match menuFunct:
 			case 0:
 				break
 			case 1:
 				innerCont == "y"
 				while(innerCont == "y"):
-					print("What would you like to do? \nPatron Menu: \n1 - search media \n2 - locate media \n3 - reserve media \n4 -  checkout media \n5 - view wishlist \n6 - delete item from wishlist \n7 - edit password \n0 - Quit")
-					patronFunct = input("Please enter the number of the menu option you would like to use: ")
+					print("What would you like to do? \nPatron Menu: \n1 - Search media \n2 - Locate media \n3 - Reserve media \n4 - Checkout media \n5 - View wishlist \n6 - Delete item from wishlist \n7 - Edit password \n0 - Quit")
+					patronFunct = int(input("Please enter the number of the menu option you would like to use: "))
 					match patronFunct:
 						case 0:
 							break
@@ -222,7 +222,7 @@ def main():
 				innerCont == "y"
 				while(innerCont == "y"):
 					print("What would you like to do? \nAdmin Menu: \n1 - return media \n2 - edit media location \n3 - add media into system \n4 - delete elements from system \n5 - view overdue book \n6 - view media inventory \n7 - edit password \n0 - Quit")
-					adminFunct = input("Please enter the number of the menu option you would like to use: ")
+					adminFunct = int(input("Please enter the number of the menu option you would like to use: "))
 					match adminFunct:
 						case 0:
 							break
@@ -260,8 +260,8 @@ def main():
 				name = input("Please enter your name: ")
 				password = input("Plase enter a password: ")
 				if password != 0:
-						authorization_no = 5
-						count = 0
+					authorization_no = 5
+					count = 0
 					for i in authorization_lists:
 						count +=1
 						print( "{}. ".format(count) + i)
