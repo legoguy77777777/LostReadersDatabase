@@ -44,15 +44,15 @@ def Add_Tuples():
 				sq.add_patron(authorization_no,password,name,null)
 		case 3: #add media
 			id = input("Please enter your librarian ID: ")
-			if(validate_staff(id)):
+			if(sq.validate_staff(id)):
 				Media_name = input("Plase enter a media's title/name: ")
 				dewey_dec = input("Plase enter a media's dewey decimal code: ")
 				summary = input("Plase enter a media's summary: ")
 				copies = input("Plase enter number of copies of media that will be stocked: ")
-				sq.add_media(dewey_dec,summary,Media_name,1,copies,null,null)
+				sq.add_media(dewey_dec,summary,Media_name,1,copies)
 		case 4: #add media_books (adds to media)
 			id = input("Please enter your librarian ID: ")
-			if(validate_staff(id)):
+			if(sq.validate_staff(id)):
 				Media_name = input("Plase enter a media's title/name: ")
 				dewey_dec = input("Plase enter a media's dewey decimal code: ")
 				summary = input("Plase enter a media's summary: ")
@@ -63,7 +63,7 @@ def Add_Tuples():
 				sq.add_media_book(Author,Genre,dewey_dec)
 		case 5: #add media_dvds (adds to media)
 			id = input("Please enter your librarian ID: ")
-			if(validate_staff(id)):
+			if(sq.validate_staff(id)):
 				Media_name = input("Plase enter a media's title/name: ")
 				dewey_dec = input("Plase enter a media's dewey decimal code: ")
 				summary = input("Plase enter a media's summary: ")
@@ -74,7 +74,7 @@ def Add_Tuples():
 				sq.add_media_dvd(Director,Genre,dewey_dec)
 		case 6: #add media_items (adds to media)
 			id = input("Please enter your librarian ID: ")
-			if(validate_staff(id)):
+			if(sq.validate_staff(id)):
 				Media_name = input("Plase enter a media's title/name: ")
 				dewey_dec = input("Plase enter a media's dewey decimal code: ")
 				summary = input("Plase enter a media's summary: ")
@@ -83,7 +83,7 @@ def Add_Tuples():
 				sq.add_media_item(dewey_dec)
 		case 7: #add location
 			id = input("Please enter your librarian ID: ")
-			if(validate_staff(id)):
+			if(sq.validate_staff(id)):
 				dewey_dec = input("Plase enter the media's dewey decimal code: ")
 				Shelf_number  = input("Plase enter the shelf number the media is located: ")
 				Shelf_row = input("Plase enter the shelf row the media is located: ")
@@ -91,7 +91,7 @@ def Add_Tuples():
 				sq.add_location(Shelf_number, dewey_dec,Shelf_row,Cardinal_direction)
 		case 8: #add media_books (adds to media)
 			id = input("Please enter your patron ID: ")
-			if(validate_patron(id)):
+			if(sq.validate_patron(id)):
 				dewey_dec = input("Plase enter the media's dewey decimal code: ")
 				due_date = input("Plase enter the media's due date: ")
 				sq.add_waitlist(id, dewey_dec, due_date)
@@ -99,6 +99,7 @@ def Add_Tuples():
 
 
 def Show_Tables():
+	clear()
 	sq.show_database()
 	table = int(input("Which table # would you like to see? (enter 0 to quit): "))
 	while table < 0 or table > 9:
@@ -107,6 +108,7 @@ def Show_Tables():
 		table = int(input("Which table # would you like to see? (enter 0 to quit): "))
 	match table:
 		case 0: #quit
+			clear(  )
 			return
 		case 1: #show libraians
 			sq.show_librarians()
@@ -147,13 +149,14 @@ def Show_Tables():
 
 def Delete_Tables():
 	print("What would you like to delete? \nMenu: \n1 - Media information \n2 - Patron information \n3 - Librarian information \n0 - Quit")
-	menuFunct = input("Please enter the number of the menu option you would like to use: ")
-	while table < 0 or table > 9:
+	menuFunct = int(input("Please enter the number of the menu option you would like to use: "))
+	while menuFunct < 0 or menuFunct > 9:
 		print("Please choose from the available option #")
 		print("What would you like to delete? \nMenu: \n1 - Media information \n2 - Patron information \n3 - Librarian information \n0 - Quit")
-		table = int(input("Please enter the number of the menu option you would like to use: "))
+		menuFunct = int(input("Please enter the number of the menu option you would like to use: "))
 	match menuFunct:
 		case 0: #quit
+			clear(  )
 			return
 		case 1: #delete media
 			dewey_dec = input("Plase enter the media's dewey decimal code: ")
@@ -203,7 +206,7 @@ def main():
 						case 5: #show waitlist
 							id = input("Please enter your patron ID: ")
 							if(validate_member(id)):
-								sq.show_patron_waitlist(id)
+								sq.show_waitlist(id)
 						case 6: #delete waitlist item
 							id = input("Please enter your patron ID: ")
 							if(validate_member(id)):
@@ -236,7 +239,7 @@ def main():
 							print(sq.get_sum_media())
 							print("Would you like to see how many books(1), dvds(2), or other itmes(3) there are: ")
 							type = int(input("Please enter the number of the menu option you would like to use: "))
-							print(sq.get_sum_media(type))
+							print(sq.get_sum_media_type(type))
 						case 7: #edit password
 							sq.edit_password()
 			case 3: #new patron
