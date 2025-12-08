@@ -28,7 +28,7 @@ def Add_Tuples():
 			for i in authorization_lists:
 				count +=1
 				print( "{}. {}".format(count, i))
-			while authorization_no not in range(1, count + 1):
+			while authorization_no in range(1, count + 1):
 				try:
 					authorization_no = int(input("Please enter ID number:"))
 				except ValueError:
@@ -43,7 +43,7 @@ def Add_Tuples():
 				for i in authorization_lists:
 					count +=1
 					print( "{}. ".format(count) + i)
-				while authorization_no not in range(0,4):
+				while authorization_no in range(0,4):
 					authorization_no = int(input("Please enter ID number:"))
 				sq.add_patron(authorization_no,password,name,null)
 		case 3: #add media
@@ -254,7 +254,7 @@ def main():
 					for i in authorization_lists:
 						count +=1
 						print( "{}. ".format(count) + i)
-					while authorization_no not in range(0,4):
+					while authorization_no in range(0,4):
 						authorization_no = int(input("Please enter ID number:"))
 					sq.add_patron(authorization_no,password,name,"null")
 			case 4: #new librarian
@@ -266,7 +266,7 @@ def main():
 					for i in authorization_lists:
 						count +=1
 						print( "{}. ".format(count) + i)
-					while authorization_no not in range(0,4):
+					while authorization_no in range(0,4):
 						authorization_no = int(input("Please enter ID number:"))
 					sq.add_librarian(authorization_no,password,name)
 		cont = input("Would you like to continue (y/n): ")
