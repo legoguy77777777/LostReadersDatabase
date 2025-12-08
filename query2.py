@@ -863,8 +863,7 @@ def get_sum_available():
 	print("The total number of media (books/dvds/items) available for checkout in the library is:", total)
 
 
-def locate_media(media_info, dewey_decimal_index):
-	dewey_decimal_code = media_info[dewey_decimal_index]
+def locate_media(Dewey_decimal_code):
 	media_location_table = mycursor.execute("""
 		select Media.Dewey_decimal_code, Location.Shelf_number, Location.Shelf_row, Location.Cardinal_direction
 		from Media, Location
