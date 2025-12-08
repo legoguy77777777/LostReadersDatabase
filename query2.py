@@ -867,7 +867,7 @@ def locate_media(Dewey_decimal_code):
 	media_location_table = mycursor.execute("""
 		select Media.Dewey_decimal_code, Location.Shelf_number, Location.Shelf_row, Location.Cardinal_direction
 		from Media, Location
-		where Media.Dewey_decimal_code = Location.Media_dewey_decimal_code and Media.Dewey_decimal_code = %s""", (dewey_decimal_code,))
+		where Media.Dewey_decimal_code = Location.Media_dewey_decimal_code and Media.Dewey_decimal_code = %s""", (Dewey_decimal_code,))
 	location_info = mycursor.fetchall()
 	print("Location is: ", location_info)
 
