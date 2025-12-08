@@ -254,7 +254,7 @@ def main():
 						print( "{}. ".format(count) + i)
 					while authorization_no not in range(0,4):
 						authorization_no = int(input("Please enter ID number:"))
-					sq.add_patron(authorization_no,password,name,null)
+					sq.add_patron(authorization_no,password,name,"null")
 			case 4: #new librarian
 				name = input("Please enter your name: ")
 				password = input("Plase enter a password: ")
