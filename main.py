@@ -23,12 +23,12 @@ def Add_Tuples():
 			password = input("Plase enter a password: ")
 			if password == '0':
 				quit()
-			authorization_no = none
+			authorization_no = None
 			count = 0
 			for i in authorization_lists:
 				count +=1
 				print( "{}. {}".format(count, i))
-			while authorization_no not in range(0,4):
+			while authorization_no not in range(1, count + 1):
 				try:
 					authorization_no = int(input("Please enter ID number:"))
 				except ValueError:
