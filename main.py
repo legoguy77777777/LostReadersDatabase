@@ -27,7 +27,7 @@ def Add_Tuples():
 			count = 0
 			for i in authorization_lists:
 				count +=1
-				print( "{}. {}".format(count, i))
+				#print( "{}. {}".format(count, i))
 			while authorization_no in range(1, count + 1):
 				try:
 					authorization_no = int(input("Please enter ID number:"))
@@ -42,7 +42,7 @@ def Add_Tuples():
 				count = 0
 				for i in authorization_lists:
 					count +=1
-					print( "{}. ".format(count) + i)
+					#print( "{}. ".format(count) + i)
 				while authorization_no in range(0,4):
 					authorization_no = int(input("Please enter ID number:"))
 				sq.add_patron(authorization_no,password,name,null)
@@ -253,7 +253,7 @@ def main():
 					count = 0
 					for i in authorization_lists:
 						count +=1
-						print( "{}. ".format(count) + i)
+						#print( "{}. ".format(count) + i)
 					while authorization_no in range(0,4):
 						authorization_no = int(input("Please enter ID number:"))
 					sq.add_patron(authorization_no,password,name,"null")
@@ -265,7 +265,7 @@ def main():
 					count = 0
 					for i in authorization_lists:
 						count +=1
-						print( "{}. ".format(count) + i)
+						#print( "{}. ".format(count) + i)
 					while authorization_no in range(0,4):
 						authorization_no = int(input("Please enter ID number:"))
 					sq.add_librarian(authorization_no,password,name)
