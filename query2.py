@@ -60,7 +60,7 @@ def show_database():
 	print("Showing Database Tables: ")
 
 #printing Librarian table
-	print("Librarian:")
+	print("1 Librarian:")
 	table = mycursor.execute("""
 		select *
 		from Librarian;
@@ -70,7 +70,7 @@ def show_database():
 		print(row)
 
 #printing Patron table
-	print("\nPatron:")
+	print("\n2 Patron:")
 	table = mycursor.execute("""
 		select *
 		from Patron;
@@ -80,7 +80,7 @@ def show_database():
 		print(row)
 
 #printing Media table
-	print("\nMedia:")
+	print("\n3 Media:")
 	table = mycursor.execute("""
 		select *
 		from Media;
@@ -90,7 +90,7 @@ def show_database():
 		print(row)
 
 #printing Media_book table
-	print("\nMedia_book:")
+	print("\n4 Media_book:")
 	table = mycursor.execute("""
 		select *
 		from Media_book;
@@ -100,7 +100,7 @@ def show_database():
 		print(row)
 
 #printing Media_dvd table
-	print("\nMedia_dvd:")
+	print("\n5 Media_dvd:")
 	table = mycursor.execute("""
 		select *
 		from Media_dvd;
@@ -110,7 +110,7 @@ def show_database():
 		print(row)
 
 #printing Media_item table
-	print("\nMedia_item:")
+	print("\n6 Media_item:")
 	table = mycursor.execute("""
 		select *
 		from Media_item;
@@ -120,7 +120,7 @@ def show_database():
 		print(row)
 
 #printing Location table
-	print("\nLocation:")
+	print("\n7 Location:")
 	table = mycursor.execute("""
 		select *
 		from Location;
@@ -130,7 +130,7 @@ def show_database():
 		print(row)
 
 #printing Edit table
-	print("\nEdit:")
+	print("\n8 Edit:")
 	table = mycursor.execute("""
 		select *
 		from Edit;
@@ -140,7 +140,7 @@ def show_database():
 		print(row)
 
 #printing Overdue_flag table
-	print("\nOverdue_flag:")
+	print("\n9 Overdue_flag:")
 	table = mycursor.execute("""
 		select *
 		from Overdue_flag;
@@ -150,7 +150,7 @@ def show_database():
 		print(row)
 
 #printing Waitlist table
-	print("\nWaitlist:")
+	print("\n10 Waitlist:")
 	table = mycursor.execute("""
 		select *
 		from Waitlist;
