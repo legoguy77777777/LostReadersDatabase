@@ -159,17 +159,17 @@ def Delete_Tables():
 		case 0: #quit
 			clear(  )
 			return
-		case 1: #quit
+		case 1: #delete media
 			dewey_dec = input("Plase enter the media's dewey decimal code: ")
 			okay = input("Are you sure? (y/n): ")
 			if(okay == "y"):
 				sq.delete_media(dewey_dec)
-		case 2:
+		case 2: #delete patron
 			id = input("Please enter the patron ID: ")
 			okay = input("Are you sure? (y/n): ")
 			if(okay == "y"):
 				sq.delete_patron(id)
-		case 3:
+		case 3: #delete librarian
 			id = input("Please enter the librarian ID: ")
 			okay = input("Are you sure? (y/n): ")
 			if(okay == "y"):
@@ -184,63 +184,66 @@ def main():
 		print("Are you a: \n1 - Patron \n2 - Librarian \n3 - New Patron \n4 - New Admin \n0 - Quit")
 		menuFunct = int(input("Please enter the number of the menu option you would like to use: "))
 		match menuFunct:
-			case 0:
+			case 0: #quit
 				break
-			case 1:
+			case 1: #patron
 				sq.login()
 				innerCont == "y"
 				while(innerCont == "y"):
-					print("What would you like to do? \nPatron Menu: \n1 - Search media \n2 - Locate media \n3 - Reserve media \n4 - Checkout media \n5 - View wishlist \n6 - Delete item from wishlist \n7 - Edit password \n0 - Quit")
+					print("What would you like to do? \nPatron Menu: \n1 - Search media \n2 - Locate media \n3 - Reserve media \n4 - Checkout media \n5 - View waitlist \n6 - Delete item from waitlist \n7 - Edit password \n0 - Quit")
 					patronFunct = int(input("Please enter the number of the menu option you would like to use: "))
 					match patronFunct:
-						case 0:
+						case 0: #quit
 							break
-						case 1:
+						case 1: #search media
 							sq.search_media()
-						case 2:
-							sq.locate_media()
-						case 3:
+						case 2: #locate media
+							dewey_dec = input("Plase enter a media's dewey decimal code: ")
+							#sq.locate_media()
+						case 3: #reserve media
 							sq.reserve_media()
-						case 4:
+						case 4: #checkout media
 							sq.checkout_media()
-						case 5:
-							sq.show_waitlists()
-						case 6:
+						case 5: #show waitlist
+							id = input("Please enter your patron ID: ")
+							if(validate_member(id)):
+								sq.show_waitlist(id)
+						case 6: #delete waitlist item
 							id = input("Please enter your patron ID: ")
 							if(validate_member(id)):
 								dewey_dec = input("Plase enter the media's dewey decimal code: ")
 								sq.delete_waitlist(dewey_dec)
-						case 7:
+						case 7: #edit password
 							sq.edit_password()
 					innerCont = input("Would you like to continue (y/n): ")
-			case 2:
+			case 2: #librarian
 				sq.login()
 				innerCont == "y"
 				while(innerCont == "y"):
 					print("What would you like to do? \nAdmin Menu: \n1 - return media \n2 - edit media location \n3 - add media into system \n4 - delete elements from system \n5 - view overdue book \n6 - view media inventory \n7 - edit password \n0 - Quit")
 					adminFunct = int(input("Please enter the number of the menu option you would like to use: "))
 					match adminFunct:
-						case 0:
+						case 0: #quit
 							break
-						case 1:
+						case 1: #log returned media
 							sq.return_media()
-						case 2:
+						case 2: #edit media location
 							sq.edit_location()
-						case 3:
+						case 3: #add to the system
 							Add_Tuples()
-						case 4:
+						case 4: #delete from the system
 							Delete_Tables()
-						case 5:
+						case 5: #view overdue flags
 							sq.show_overdue_flags()
-						case 6:
+						case 6: #view library inventory numbers
 							print(sq.get_sum_available())
 							print(sq.get_sum_media())
 							print("Would you like to see how many books(1), dvds(2), or other itmes(3) there are: ")
 							type = int(input("Please enter the number of the menu option you would like to use: "))
 							print(sq.get_sum_media(type))
-						case 7:
+						case 7: #edit password
 							sq.edit_password()
-			case 3:
+			case 3: #new patron
 				name = input("Please enter your name: ")
 				password = input("Plase enter a password: ")
 				if password != 0:
@@ -252,7 +255,7 @@ def main():
 					while authorization_no not in range(0,4):
 						authorization_no = int(input("Please enter ID number:"))
 					sq.add_patron(authorization_no,password,name,null)
-			case 4:
+			case 4: #new librarian
 				name = input("Please enter your name: ")
 				password = input("Plase enter a password: ")
 				if password != 0:
