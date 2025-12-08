@@ -190,7 +190,7 @@ def main():
 				sq.login()
 				innerCont == "y"
 				while(innerCont == "y"):
-					print("What would you like to do? \nPatron Menu: \n1 - Search media \n2 - Locate media \n3 - Reserve media \n4 - Checkout media \n5 - View wishlist \n6 - Delete item from wishlist \n7 - Edit password \n0 - Quit")
+					print("What would you like to do? \nPatron Menu: \n1 - Search media \n2 - Locate media \n3 - Reserve media \n4 - Checkout media \n5 - View waitlist \n6 - Delete item from waitlist \n7 - Edit password \n0 - Quit")
 					patronFunct = int(input("Please enter the number of the menu option you would like to use: "))
 					match patronFunct:
 						case 0: #quit
@@ -204,9 +204,11 @@ def main():
 							sq.reserve_media()
 						case 4: #checkout media
 							sq.checkout_media()
-						case 5: #show wishlist
-							sq.show_waitlists()
-						case 6: #delete wishlist
+						case 5: #show waitlist
+							id = input("Please enter your patron ID: ")
+							if(validate_member(id)):
+								sq.show_waitlist(id)
+						case 6: #delete waitlist item
 							id = input("Please enter your patron ID: ")
 							if(validate_member(id)):
 								dewey_dec = input("Plase enter the media's dewey decimal code: ")
