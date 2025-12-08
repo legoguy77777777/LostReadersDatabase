@@ -187,7 +187,7 @@ def main():
 			case 0:
 				break
 			case 1:
-				login()
+				sq.login()
 				innerCont == "y"
 				while(innerCont == "y"):
 					print("What would you like to do? \nPatron Menu: \n1 - Search media \n2 - Locate media \n3 - Reserve media \n4 - Checkout media \n5 - View wishlist \n6 - Delete item from wishlist \n7 - Edit password \n0 - Quit")
@@ -214,7 +214,7 @@ def main():
 							sq.edit_password()
 					innerCont = input("Would you like to continue (y/n): ")
 			case 2:
-				login()
+				sq.login()
 				innerCont == "y"
 				while(innerCont == "y"):
 					print("What would you like to do? \nAdmin Menu: \n1 - return media \n2 - edit media location \n3 - add media into system \n4 - delete elements from system \n5 - view overdue book \n6 - view media inventory \n7 - edit password \n0 - Quit")
