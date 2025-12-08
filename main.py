@@ -243,27 +243,27 @@ def main():
 			case 3: #new patron
 				name = input("Please enter your name: ")
 				password = input("Plase enter a password: ")
-				if password != 0:
-					authorization_no = 5
-					count = 0
-					for i in authorization_lists:
-						count +=1
-						#print( "{}. ".format(count) + i)
-					while authorization_no in range(0,4):
-						authorization_no = int(input("Please enter ID number:"))
-					sq.add_patron(authorization_no,password,name,"null")
+				if password == '0':
+					quit()
+				authorization_no = None
+				count = 0
+				try:
+					authorization_no = int(input("Please enter ID number:"))
+				except ValueError:
+					print("Please enter valid number... ")
+				sq.add_patron(authorization_no,password,name,"null")
 			case 4: #new librarian
 				name = input("Please enter your name: ")
 				password = input("Plase enter a password: ")
-				if password != 0:
-					authorization_no = 5
-					count = 0
-					for i in authorization_lists:
-						count +=1
-						#print( "{}. ".format(count) + i)
-					while authorization_no in range(0,4):
-						authorization_no = int(input("Please enter ID number:"))
-					sq.add_librarian(authorization_no,password,name)
+				if password == '0':
+					quit()
+				authorization_no = None
+				count = 0
+				try:
+					authorization_no = int(input("Please enter ID number:"))
+				except ValueError:
+					print("Please enter valid number... ")
+				sq.add_librarian(authorization_no,password,name)
 		cont = input("Would you like to continue (y/n): ")
 			
 
