@@ -9,7 +9,6 @@ import os
 authorization_lists = ('Patron', 'Admin')
 
 def Add_Tuples():
-	clear()
 	sq.show_database()
 	table = int(input("Which table # would you like to add to? [0 to exit]: "))
 	while table < 0 or table > 9:
@@ -100,7 +99,6 @@ def Add_Tuples():
 
 
 def Show_Tables():
-	clear()
 	sq.show_database()
 	table = int(input("Which table # would you like to see? (enter 0 to quit): "))
 	while table < 0 or table > 9:
@@ -109,7 +107,6 @@ def Show_Tables():
 		table = int(input("Which table # would you like to see? (enter 0 to quit): "))
 	match table:
 		case 0: #quit
-			clear(  )
 			return
 		case 1: #show libraians
 			sq.show_librarians()
@@ -157,7 +154,6 @@ def Delete_Tables():
 		table = int(input("Please enter the number of the menu option you would like to use: "))
 	match menuFunct:
 		case 0: #quit
-			clear(  )
 			return
 		case 1: #delete media
 			dewey_dec = input("Plase enter the media's dewey decimal code: ")
