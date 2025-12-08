@@ -198,7 +198,8 @@ def main():
 						case 1: #search media
 							sq.search_media()
 						case 2: #locate media
-							sq.locate_media()
+							dewey_dec = input("Plase enter a media's dewey decimal code: ")
+							#sq.locate_media()
 						case 3: #reserve media
 							sq.reserve_media()
 						case 4: #checkout media
