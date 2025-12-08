@@ -220,7 +220,7 @@ def main():
 				sq.login()
 				innerCont == "y"
 				while(innerCont == "y"):
-					print("What would you like to do? \nAdmin Menu: \n1 - return media \n2 - edit media location \n3 - add media into system \n4 - delete elements from system \n5 - view overdue book \n6 - view media inventory \n7 - edit password \n0 - Quit")
+					print("What would you like to do? \nAdmin Menu: \n1 - Return media \n2 - Edit media location \n3 - Add media into system \n4 - Delete elements from system \n5 - View overdue book \n6 - View media inventory \n7 - Edit password \n0 - Quit")
 					adminFunct = int(input("Please enter the number of the menu option you would like to use: "))
 					match adminFunct:
 						case 0: #quit
