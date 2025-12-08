@@ -207,7 +207,7 @@ def main():
 						case 5: #show waitlist
 							id = input("Please enter your patron ID: ")
 							if(validate_member(id)):
-								sq.show_waitlist(id)
+								sq.show_patron_waitlist(id)
 						case 6: #delete waitlist item
 							id = input("Please enter your patron ID: ")
 							if(validate_member(id)):
