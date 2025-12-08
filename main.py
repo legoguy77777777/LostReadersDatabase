@@ -108,7 +108,6 @@ def Show_Tables():
 		table = int(input("Which table # would you like to see? (enter 0 to quit): "))
 	match table:
 		case 0: #quit
-			clear(  )
 			return
 		case 1: #show libraians
 			sq.show_librarians()
@@ -150,13 +149,12 @@ def Show_Tables():
 def Delete_Tables():
 	print("What would you like to delete? \nMenu: \n1 - Media information \n2 - Patron information \n3 - Librarian information \n0 - Quit")
 	menuFunct = int(input("Please enter the number of the menu option you would like to use: "))
-	while menuFunct < 0 or menuFunct > 9:
+	while menuFunct < 0 or menuFunct > 3:
 		print("Please choose from the available option #")
 		print("What would you like to delete? \nMenu: \n1 - Media information \n2 - Patron information \n3 - Librarian information \n0 - Quit")
 		menuFunct = int(input("Please enter the number of the menu option you would like to use: "))
 	match menuFunct:
 		case 0: #quit
-			clear(  )
 			return
 		case 1: #delete media
 			dewey_dec = input("Plase enter the media's dewey decimal code: ")
