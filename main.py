@@ -89,8 +89,8 @@ def Add_Tuples():
 				Shelf_row = input("Plase enter the shelf row the media is located: ")
 				Cardinal_direction  = input("Plase enter the Cardinal direction the exposed part of the media is facing: ")
 				sq.add_location(Shelf_number, dewey_dec,Shelf_row,Cardinal_direction)
-		case 8: #add media_books (adds to media)
-			id = input("Please enter your patron ID: ")
+		case 8: #add waitlist
+			id = input("Please enter their patron ID: ")
 			if(sq.validate_patron(id)):
 				dewey_dec = input("Plase enter the media's dewey decimal code: ")
 				due_date = input("Plase enter the media's due date: ")
