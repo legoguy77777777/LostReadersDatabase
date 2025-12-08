@@ -25,27 +25,24 @@ def Add_Tuples():
 				quit()
 			authorization_no = None
 			count = 0
-			for i in authorization_lists:
-				count +=1
-				#print( "{}. {}".format(count, i))
-			while authorization_no in range(1, count + 1):
-				try:
-					authorization_no = int(input("Please enter ID number:"))
-				except ValueError:
-					print("Please enter valid number... ")
+			try:
+				authorization_no = int(input("Please enter ID number:"))
+			except ValueError:
+				print("Please enter valid number... ")
 			sq.add_librarian(authorization_no,password,name)
 		case 2: #add patron
-			name = input("Please enter your name: ")
-			password = input("Plase enter a password: ")
-			if password != 0:
-				authorization_no = 5
-				count = 0
-				for i in authorization_lists:
-					count +=1
-					#print( "{}. ".format(count) + i)
-				while authorization_no in range(0,4):
-					authorization_no = int(input("Please enter ID number:"))
-				sq.add_patron(authorization_no,password,name,null)
+                        name = input("Please enter your name: ")
+                        password = input("Plase enter a password: ")
+                        if password == '0':
+                                quit()
+                        authorization_no = None
+                        count = 0
+                        try:
+                                authorization_no = int(input("Please enter ID number:"))
+                        except ValueError:
+                                print("Please enter valid number... ")
+
+			sq.add_patron(authorization_no,password,name,null)
 		case 3: #add media
 			id = input("Please enter your librarian ID: ")
 			if(sq.validate_staff(id)):
