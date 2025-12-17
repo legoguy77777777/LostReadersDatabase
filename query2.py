@@ -929,7 +929,7 @@ def search_media():
 		while (correct != "y") and (correct != "n") and (correct != "Y") and (correct != "N"):
 			correct = input("Is this the media you were looking for? (y - Yes, n - No) ")
 		if (correct == "y") or (correct == "Y"):
-			locate_media(table_info[selection - 1], 0)
+			locate_media(table_info[selection - 1][0])
 		else:
 			print("Returning to search menu...\n")
 			search_media()

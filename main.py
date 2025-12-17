@@ -56,7 +56,7 @@ def Add_Tuples():
 				dewey_dec = input("Plase enter a media's dewey decimal code: ")
 				summary = input("Plase enter a media's summary: ")
 				copies = input("Plase enter number of copies of media that will be stocked: ")
-				sq.add_media(dewey_dec,summary,Media_name,1,copies,null,null)
+				sq.add_media(dewey_dec,summary,Media_name,1, copies)
 				Author = input("Plase enter the book's author: ")
 				Genre = input("Plase enter the book's genre: ")
 				sq.add_media_book(Author,Genre,dewey_dec)
@@ -202,8 +202,8 @@ def main():
 							sq.checkout_media()
 						case 5: #show waitlist
 							id = input("Please enter your patron ID: ")
-							if(validate_member(id)):
-								sq.show_waitlist(id)
+							if(sq.validate_member(id)):
+								sq.show_waitlists()
 						case 6: #delete waitlist item
 							id = input("Please enter your patron ID: ")
 							if(validate_member(id)):
